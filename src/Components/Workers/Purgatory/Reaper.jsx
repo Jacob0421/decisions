@@ -23,12 +23,9 @@ export function Reaper(params) {
 			BadTraits: countBadTraits,
 		};
 
-		console.log(
-			`Soul => GoodTraits: ${soul.GoodTraits}, BadTraits: ${soul.BadTraits}`
-		);
 		console.log(`Reaper ${id} - Passed`);
 
-		handleComplete("Reaper", soul);
+		handleComplete("Reaper", id, soul);
 	}
 
 	useEffect(() => {
