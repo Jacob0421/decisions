@@ -3,11 +3,18 @@ import React, { useEffect } from "react";
 export function Verifier(params) {
 	const { id, timeToComplete, soul, handleComplete } = params;
 
+	function verifySoul() {
+		if (!soul) {
+			return;
+		}
+
+		console.log(`Verifier ${id + 1} - Passed`);
+
+		handleComplete("Verifier", id, soul);
+	}
+
 	useEffect(() => {
-		let ticker = setInterval(
-			() => handleComplete("Verifier", id, soul),
-			timeToComplete
-		);
+		let ticker = setInterval(() => verifySoul(), timeToComplete);
 		return () => clearInterval(ticker);
 	}, [soul]);
 
