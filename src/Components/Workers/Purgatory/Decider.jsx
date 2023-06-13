@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export function Decider(params) {
+export default function Decider(params) {
 	const { id, soul, timeToComplete, percentCorrect, handleDecision } = params;
 
 	function processSoul() {
@@ -39,7 +39,7 @@ export function Decider(params) {
 		const ticker = setInterval(() => processSoul(), timeToComplete);
 
 		return () => clearInterval(ticker);
-	}, []);
+	}, [soul]);
 
 	return (
 		<>

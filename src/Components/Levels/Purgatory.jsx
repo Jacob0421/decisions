@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import { Reaper } from "../Workers/Purgatory/Reaper";
-import { Verifier } from "../Workers/Purgatory/Verifier";
-import { Decider } from "../Workers/Purgatory/Decider";
+import Reaper from "../Workers/Purgatory/Reaper";
+import Verifier from "../Workers/Purgatory/Verifier";
+import Decider from "../Workers/Purgatory/Decider";
 
-export function Purgatory() {
+export default function Purgatory(params) {
+	const { handleAscension, handleDescension } = params;
+
 	// ToDo: Move this value initialization to extrernal data file
 	const [reapers, setReapers] = useState([
 		{
@@ -116,7 +118,13 @@ export function Purgatory() {
 	const handleDecision = (id, decision, soul) => {
 		// Here we need to do the same as above. empty the one from the queue, and move to next step. probably return an object containing both the soul and the boolean "decision"
 
-		console.log("handleDecision is not yet implemented");
+		if (decision) {
+			console.log("Final: Ascended");
+			handleAscension(soul);
+		} else {
+			console.log("Final: Descended");
+			handleDescension(soul);
+		}
 	};
 
 	return (

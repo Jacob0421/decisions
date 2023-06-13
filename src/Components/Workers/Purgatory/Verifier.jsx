@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export function Verifier(params) {
+export default function Verifier(params) {
 	const { id, timeToComplete, soul, handleComplete } = params;
 
 	function verifySoul() {

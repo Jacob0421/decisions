@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SoulData } from "../../../Data/Soul";
 
-export function Reaper(params) {
+export default function Reaper(params) {
 	const { timeToComplete, handleComplete, id } = params;
 
 	function GenerateSoul() {
