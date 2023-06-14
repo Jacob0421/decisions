@@ -116,13 +116,22 @@ export default function Purgatory(params) {
 
 	// for Decider
 	const handleDecision = (id, decision, soul) => {
-		// Here we need to do the same as above. empty the one from the queue, and move to next step. probably return an object containing both the soul and the boolean "decision"
+		// Here we need to do the same as above.
+		// empty the one from the queue,
+		let deciderData = deciders;
+
+		deciderData[id].queue = deciderData[id].queue.filter(
+			(d, index) => index !== 0
+		);
+
+		setDeciders(deciderData);
+
+		// (DONE) and move to next step.
 
 		if (decision) {
-			console.log("Final: Ascended");
+			//calback function from ../Conten/Content.jsx
 			handleAscension(soul);
 		} else {
-			console.log("Final: Descended");
 			handleDescension(soul);
 		}
 	};
