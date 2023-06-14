@@ -4,7 +4,7 @@ import "./Shop.css";
 
 export default function Shop() {
 	return (
-		<section className="center-container center-text">
+		<section className="center-container center-text" data-testID="shop-1">
 			<h1>Shop</h1>
 			<div className="content">
 				<h2 className="section-header">Upgrades</h2>

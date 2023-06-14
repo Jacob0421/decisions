@@ -1,0 +1,46 @@
+.test-container{
+    height: 100vh;
+    overflow: hidden;
+}
+
+.test-buttons {
+    position: absolute;
+    z-index: 9999;
+}
+
+.test {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10vh;
+    margin: 0 auto;
+}
+
+.lower {
+    height: 80vh;
+    width: 90vw;
+}
+
+.one {
+    border: 2px solid red;
+}
+
+.two {
+    border: 2px solid blue;
+}
+
+.three {
+    border: 2px solid red;
+}
+
+.heaven-visible {
+    transform: translateY(0)
+}
+
+.purgatory-visible {
+    transform: translateY(-87vh);
+}
+
+.hell-visible {
+    transform: translateY(-176vh)
+}
