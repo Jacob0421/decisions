@@ -4,7 +4,7 @@ import Purgatory from "../Levels/Purgatory";
 import Heaven from "../Levels/Heaven";
 import Hell from "../Levels/Hell";
 
-export function Content() {
+export default function Content() {
 	// const handleNewWorker = (Level, buildingName) => {
 	// 	switch (Level) {
 	// 		case "Reaper":
@@ -58,13 +58,44 @@ export function Content() {
 		});
 	};
 
+	const [buttonText, setButtonText] = useState("Show Shop");
+
+	const changeText = (text) => {
+		setButtonText(text);
+	}
+
 	const handleShopVisibility = () => {
 		setShowShop((current) => !current);
+		if (showShop ? changeText("Show Shop") : changeText("Hide Shop"));
 	};
 
+	const [heavenVisible, setHeavenVisible] = useState(false);
+    const [purgatoryVisible, setPurgatoryVisible] = useState(true);
+    const [hellVisible, setHellVisible] = useState(false);
+
+    const handleClick = (levelName) => {
+        switch (levelName) {
+            case "Heaven":
+                setHeavenVisible(true);
+                setPurgatoryVisible(false);
+                setHellVisible(false);
+                break;
+            case "Purgatory":
+                setHeavenVisible(false);
+                setPurgatoryVisible(true);
+                setHellVisible(false);
+                break;
+            case "Hell":
+                setHeavenVisible(false);
+                setPurgatoryVisible(false);
+                setHellVisible(true);
+                break;
+        }
+    };
+
 	return (
-		<>
-			<button onClick={handleShopVisibility}>Show Shop</button>
+		<div data-testID="content-1">
+			<button onClick={handleShopVisibility}>{buttonText}</button>
 
 			{showShop && <Shop />}
 			<Heaven soulsAscending={soulsAscending.queue} />
@@ -77,6 +108,6 @@ export function Content() {
 
 			<p>Hell Queue: {soulsDescending.queue.length}</p>
 			<Hell soulsDescending={soulsDescending.queue} />
-		</>
+		</div>
 	);
 }
