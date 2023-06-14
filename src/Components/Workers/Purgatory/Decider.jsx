@@ -22,13 +22,9 @@ export default function Decider(params) {
 		let decision = Math.floor(Math.random() * 100);
 
 		let percentIncorrect = 100 - percentCorrect;
-
-		console.log(`decision: ${decision}`);
-		console.log(`decisionBool pre-correction: ${decisionBool}`);
 		if (decision < percentIncorrect) {
 			decisionBool = !decisionBool;
 		}
-		console.log(`decisionBool post-correction: ${decisionBool}`);
 
 		console.log(`Decider ${id + 1} - Passed`);
 

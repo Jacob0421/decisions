@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Shop from "../Shop/Shop";
 import Purgatory from "../Levels/Purgatory";
 import Heaven from "../Levels/Heaven";
@@ -16,6 +16,8 @@ export function Content() {
 	// 			break;
 	// 	}
 	// };
+
+	const [showShop, setShowShop] = useState(false);
 
 	const [soulsAscending, setSoulsAscending] = useState({
 		maxQueueLength: 10,
@@ -36,28 +38,36 @@ export function Content() {
 			return;
 		}
 
-		ascensionData.queue = [...ascensionData.queue, soul];
-		setSoulsAscending(ascensionData);
+		setSoulsAscending((prev) => {
+			return { ...prev, queue: [...prev.queue, soul] };
+		});
 	};
 
 	const handleDescension = (soul) => {
-		let decensionData = soulsDescending;
+		let descensionData = soulsDescending;
 
-		if (decensionData.queue.length >= decensionData.maxQueueLength) {
+		if (descensionData.queue.length >= descensionData.maxQueueLength) {
 			console.log(
-				"No room in the Ascension queue. This soul is left to roam in purgatory"
+				"No room in the Descension queue. This soul is left to roam in purgatory"
 			);
 			return;
 		}
 
-		decensionData.queue = [...decensionData.queue, soul];
-		setSoulsAscending(decensionData);
+		setSoulsDescending((prev) => {
+			return { ...prev, queue: [...prev.queue, soul] };
+		});
+	};
+
+	const handleShopVisibility = () => {
+		setShowShop((current) => !current);
 	};
 
 	return (
 		<>
-			<Shop />
-			<Heaven soulsAscending={soulsAscending} />
+			<button onClick={handleShopVisibility}>Show Shop</button>
+
+			{showShop && <Shop />}
+			<Heaven soulsAscending={soulsAscending.queue} />
 			<p>Heaven Queue: {soulsAscending.queue.length}</p>
 
 			<Purgatory
@@ -66,7 +76,7 @@ export function Content() {
 			/>
 
 			<p>Hell Queue: {soulsDescending.queue.length}</p>
-			<Hell soulsDescending={soulsDescending} />
+			<Hell soulsDescending={soulsDescending.queue} />
 		</>
 	);
 }
