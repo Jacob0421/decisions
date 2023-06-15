@@ -1,46 +1,59 @@
-.test-container{
-    height: 100vh;
-    overflow: hidden;
-}
-
-.test-buttons {
-    position: absolute;
-    z-index: 9999;
-}
-
-.test {
-    position: absolute;
+.level-container {
     display: flex;
     flex-direction: column;
-    gap: 10vh;
-    margin: 0 auto;
+    width: 70vw;
+}
+.level {
+    display: flex;
+    flex-direction: column;
+    height: 33.33vh;
+    overflow: hidden;
+    flex-wrap: wrap;
 }
 
-.lower {
-    height: 80vh;
-    width: 90vw;
+.purgatory {
+    background: lightskyblue
 }
 
-.one {
-    border: 2px solid red;
+.heaven {
+    background: lightgrey;
 }
 
-.two {
-    border: 2px solid blue;
+.hell {
+    background: grey
 }
 
-.three {
-    border: 2px solid red;
+.right-pane {
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
 }
 
-.heaven-visible {
-    transform: translateY(0)
+.right-content {
+    height: 95%;
+    overflow-y: scroll;
 }
 
-.purgatory-visible {
-    transform: translateY(-87vh);
+.right-menu {
+    height: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.hell-visible {
-    transform: translateY(-176vh)
+.right-menu button {
+    flex-shrink: 0;
+    height: 100%;
+}
+
+.current-stats {
+    padding-right: 2vw;
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
 }
