@@ -77,6 +77,8 @@ export default function Hell(params) {
 		}
 
 		devilData.queue = [...devilData.queue, soul];
+
+		setTheDevil(devilData);
 	};
 
 	const findDistributorAndQueue = (soul) => {

@@ -24,6 +24,7 @@ export function Content() {
 	const [isStatsVisible, setIsStatsVisible] = useState(false);
 
 	const [demonCount, setDemonCount] = useState(0);
+	const [angelCount, setAngelCount] = useState(0);
 
 	const [soulsAscending, setSoulsAscending] = useState({
 		maxQueueLength: 10,
@@ -89,6 +90,16 @@ export function Content() {
 					};
 				});
 				break;
+			case "Heaven":
+				setSoulsAscending((prev) => {
+					return {
+						...prev,
+						queue: [
+							...prev.queue.filter((soul, index) => index !== 0),
+						],
+					};
+				});
+				break;
 			default:
 				break;
 		}
@@ -98,6 +109,9 @@ export function Content() {
 		switch (levelName) {
 			case "Hell":
 				setDemonCount(demonCount + 1);
+				break;
+			case "Heaven":
+				setAngelCount(angelCount + 1);
 				break;
 			default:
 				break;
@@ -117,7 +131,7 @@ export function Content() {
 						</button>
 					</div>
 					<div className="current-stats">
-						<p>Angels: &#123;Count&#125;</p>
+						<p>Angels: {angelCount}</p>
 						<p>Demons: {demonCount}</p>
 						<p>Money: &#123;Count&#125;</p>
 					</div>
@@ -129,7 +143,13 @@ export function Content() {
 			</div>
 			<div className="level-container">
 				<div className="level heaven">
-					<Heaven soulsAscending={soulsAscending.queue} />
+					<Heaven
+						soulsAscending={soulsAscending.queue}
+						handleProcessedSoulFromQueue={
+							handleProcessedSoulFromQueue
+						}
+						handleFinalProcess={handleFinalProcess}
+					/>
 				</div>
 
 				<div className="level purgatory">
