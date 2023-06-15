@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { SoulData } from "../../../Data/Soul";
+import { SoulData } from "../../../../../Data/Soul";
 
 export default function Reaper(params) {
-	const { timeToComplete, handleComplete, id } = params;
+	const {
+		timeToComplete,
+		handleComplete,
+		id,
+		revenueGenerated,
+		handleRevenue,
+	} = params;
 
 	function GenerateSoul() {
 		let randNum = 0,
@@ -23,6 +29,8 @@ export default function Reaper(params) {
 			BadTraits: countBadTraits,
 		};
 
+		// console.log(`Reaper ${id} Completed`);
+		handleRevenue(revenueGenerated);
 		handleComplete("Reaper", id, soul);
 	}
 

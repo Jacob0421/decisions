@@ -1,17 +1,73 @@
 import React, { useState, useEffect } from "react";
 
-import Reaper from "../Workers/Purgatory/Reaper";
-import Verifier from "../Workers/Purgatory/Verifier";
-import Decider from "../Workers/Purgatory/Decider";
+import Reaper from "./Workers/Reaper";
+import Verifier from "./Workers/Verifier";
+import Decider from "./Workers/Decider";
 
 export default function Purgatory(params) {
-	const { handleAscension, handleDescension } = params;
+	const {
+		handleAscension,
+		handleDescension,
+		itemBought,
+		handleBuyCompleted,
+		handleRevenue,
+	} = params;
+
+	useEffect(() => {
+		if (Object.keys(itemBought).length === 0) {
+			return;
+		}
+		applyItemBought();
+	}, [itemBought]);
+
+	const applyItemBought = () => {
+		console.log(itemBought.buildingAffected);
+		switch (itemBought.buildingAffected) {
+			case "Reaper":
+				if (itemBought.upgradeModifiers.worker === 1) {
+					setReapers([
+						...reapers,
+						{
+							timeToComplete: 1000,
+							moneyGenerated: 100,
+						},
+					]);
+				} else {
+					let reaperData = [...reapers];
+
+					reaperData.forEach((r) => {
+						r.moneyGenerated *= itemBought.upgradeModifiers.money;
+						r.timeToComplete *=
+							itemBought.upgradeModifiers.productivity;
+					});
+					setReapers(reaperData);
+				}
+
+				// if (itemBought.upgradeType === "Worker") {
+				// 	setReapers([
+				// 		...reapers,
+				// 		{
+				// 			name: "Rubio",
+				// 			timeToComplete: 1000,
+				// 		},
+				// 	]);
+				// } else if (itemBought.upgradeType === "Money"){
+
+				// } else {
+
+				// }
+				handleBuyCompleted("Purgatory");
+				break;
+			default:
+				break;
+		}
+	};
 
 	// ToDo: Move this value initialization to extrernal data file
 	const [reapers, setReapers] = useState([
 		{
-			name: "Remy",
 			timeToComplete: 1000,
+			moneyGenerated: 100,
 		},
 	]);
 
@@ -135,6 +191,8 @@ export default function Purgatory(params) {
 					id={index + 1}
 					timeToComplete={reaper.timeToComplete}
 					handleComplete={handleComplete}
+					revenueGenerated={reaper.moneyGenerated}
+					handleRevenue={handleRevenue}
 				/>
 			))}
 			{/* <p>Verifiers Queue Length: {verifiersQueue.length}</p> */}

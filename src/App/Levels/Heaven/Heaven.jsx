@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Welcomer from "../Workers/Heaven/Welcomer";
-import WingReceptionist from "../Workers/Heaven/WingReceptionist";
-import God from "../Workers/Heaven/God";
-import HaloDistributor from "../Workers/Heaven/HaloDistributor";
+import Welcomer from "./Workers/Welcomer";
+import WingReceptionist from "./Workers/WingReceptionist";
+import God from "./Workers/God";
+import HaloDistributor from "./Workers/HaloDistributor";
 
 export default function Heaven(params) {
 	let { soulsAscending, handleProcessedSoulFromQueue, handleFinalProcess } =

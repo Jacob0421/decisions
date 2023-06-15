@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import HornFitter from "../Workers/Hell/HornFitter";
-import TailAttacher from "../Workers/Hell/TailAttacher";
-import TridentDistributor from "../Workers/Hell/TridentDistributor";
-import TheDevil from "../Workers/Hell/TheDevil";
+import HornFitter from "./Workers/HornFitter";
+import TailAttacher from "./Workers/TailAttacher";
+import TridentDistributor from "./Workers/TridentDistributor";
+import TheDevil from "./Workers/TheDevil";
 
 export default function Hell(params) {
-	let { soulsDescending, handleProcessedSoulFromQueue, handleFinalProcess } =
+	let { soulsDescending, handleProcessedSoulFromQueue, handleFinalProcess, itemBought} =
 		params;
 
 	const [hornFitters, setHornFitters] = useState([
