@@ -16,5 +16,9 @@ export default function Verifier(params) {
 		return () => clearInterval(ticker);
 	}, [soul]);
 
-	return <></>;
+	return (
+		<>
+			<h1>Verifier</h1>
+		</>
+	);
 }

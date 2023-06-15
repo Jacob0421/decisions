@@ -35,5 +35,9 @@ export default function Decider(params) {
 		return () => clearInterval(ticker);
 	}, [soul]);
 
-	return <></>;
+	return (
+		<>
+			<h1>Decider</h1>
+		</>
+	);
 }

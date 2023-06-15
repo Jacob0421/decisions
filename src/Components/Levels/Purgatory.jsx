@@ -11,7 +11,7 @@ export default function Purgatory(params) {
 	const [reapers, setReapers] = useState([
 		{
 			name: "Remy",
-			timeToComplete: 2000,
+			timeToComplete: 1000,
 		},
 	]);
 
@@ -19,7 +19,7 @@ export default function Purgatory(params) {
 	const [verifiers, setVerifiers] = useState([
 		{
 			name: "Veronica",
-			timeToComplete: 4000,
+			timeToComplete: 2000,
 			queueMax: 5,
 			queue: [],
 		},
@@ -29,7 +29,7 @@ export default function Purgatory(params) {
 	const [deciders, setDeciders] = useState([
 		{
 			name: "Daryl",
-			timeToComplete: 6000,
+			timeToComplete: 3000,
 			percentCorrect: 50,
 			queueMax: 5,
 			queue: [],

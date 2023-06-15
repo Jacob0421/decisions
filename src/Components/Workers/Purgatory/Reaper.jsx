@@ -32,5 +32,9 @@ export default function Reaper(params) {
 		return () => clearInterval(ticker);
 	}, []);
 
-	return <></>;
+	return (
+		<>
+			<h1>Reaper</h1>
+		</>
+	);
 }

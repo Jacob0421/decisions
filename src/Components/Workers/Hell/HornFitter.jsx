@@ -4,10 +4,6 @@ export default function HornFitter(params) {
 	const { id, timeToComplete, soul, handleComplete } = params;
 
 	function processSoul() {
-		console.log(`Horn fitter ${id + 1} complete`);
-
-		console.log(soul);
-
 		handleComplete("HornFitter", id, soul);
 	}
 

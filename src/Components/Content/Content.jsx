@@ -36,9 +36,9 @@ export function Content() {
 		let ascensionData = soulsAscending;
 
 		if (ascensionData.queue.length >= ascensionData.maxQueueLength) {
-			console.log(
-				"No room in the Ascension queue. This soul is left to roam in purgatory"
-			);
+			// console.log(
+			// 	"No room in the Ascension queue. This soul is left to roam in purgatory"
+			// );
 			return;
 		}
 
@@ -51,9 +51,9 @@ export function Content() {
 		let descensionData = soulsDescending;
 
 		if (descensionData.queue.length >= descensionData.maxQueueLength) {
-			console.log(
-				"No room in the Descension queue. This soul is left to roam in purgatory"
-			);
+			// console.log(
+			// 	"No room in the Descension queue. This soul is left to roam in purgatory"
+			// );
 			return;
 		}
 
@@ -71,6 +71,23 @@ export function Content() {
 			case "Stats":
 				setIsShopVisible(false);
 				setIsStatsVisible(true);
+				break;
+		}
+	};
+
+	const handleProcessedSoulFromQueue = (levelName) => {
+		switch (levelName) {
+			case "Hell":
+				setSoulsDescending((prev) => {
+					return {
+						...prev,
+						queue: [
+							...prev.queue.filter((soul, index) => index !== 0),
+						],
+					};
+				});
+				break;
+			default:
 				break;
 		}
 	};
@@ -110,7 +127,12 @@ export function Content() {
 					/>
 				</div>
 				<div className="level hell">
-					<Hell soulsDescending={soulsDescending.queue} />
+					<Hell
+						soulsDescending={soulsDescending.queue}
+						handleProcessedSoulFromQueue={
+							handleProcessedSoulFromQueue
+						}
+					/>
 				</div>
 			</div>
 		</>
