@@ -1,11 +1,268 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches snapshot 1`] = `
-<div
-  data-testid="shop-1"
+<section
+  className="center-container center-text"
+  data-testID="shop-1"
 >
   <h1>
     Shop
   </h1>
-</div>
+  <div
+    className="content"
+  >
+    <h2
+      className="section-header"
+    >
+      Upgrades
+    </h2>
+    <div
+      className="item-section"
+    >
+      <button
+        className="card flex col"
+      >
+        <p>
+          Additional Reapers
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            +1 Reapers
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Mo' Money, Mo' Problems
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            Reapers generate more money when harvesting souls
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Additional Reapers
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            +1 Reapers
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Mo' Money, Mo' Problems
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            Reapers generate more money when harvesting souls
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Additional Reapers
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            +1 Reapers
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Mo' Money, Mo' Problems
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            Reapers generate more money when harvesting souls
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Additional Reapers
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            +1 Reapers
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Mo' Money, Mo' Problems
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            Reapers generate more money when harvesting souls
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Additional Reapers
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            +1 Reapers
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Mo' Money, Mo' Problems
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            Reapers generate more money when harvesting souls
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+    </div>
+    <div
+      className="shop-divider"
+    />
+    <h2
+      className="section-header"
+    >
+      Consumables
+    </h2>
+    <div
+      className="item-section"
+    >
+      <button
+        className="card flex col"
+      >
+        <p>
+          Additional Reapers
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            +1 Reapers
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+      <button
+        className="card flex col"
+      >
+        <p>
+          Mo' Money, Mo' Problems
+        </p>
+        <label>
+          <strong>
+            Effect:
+          </strong>
+          <p>
+            Reapers generate more money when harvesting souls
+          </p>
+        </label>
+        <p>
+          Cost: 
+          100
+        </p>
+      </button>
+    </div>
+    <div
+      className="shop-divider"
+    />
+  </div>
+</section>
 `;

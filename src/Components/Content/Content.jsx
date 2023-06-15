@@ -4,10 +4,9 @@ import Stats from "./MenuOptions/Stats/Stats";
 import Purgatory from "../Levels/Purgatory";
 import Heaven from "../Levels/Heaven";
 import Hell from "../Levels/Hell";
-
 import "./Content.css";
 
-export function Content() {
+export default function Content() {
 	// const handleNewWorker = (Level, buildingName) => {
 	// 	switch (Level) {
 	// 		case "Reaper":
@@ -117,6 +116,30 @@ export function Content() {
 				break;
 		}
 	};
+
+	const [heavenVisible, setHeavenVisible] = useState(false);
+    const [purgatoryVisible, setPurgatoryVisible] = useState(true);
+    const [hellVisible, setHellVisible] = useState(false);
+
+    const handleClick = (levelName) => {
+        switch (levelName) {
+            case "Heaven":
+                setHeavenVisible(true);
+                setPurgatoryVisible(false);
+                setHellVisible(false);
+                break;
+            case "Purgatory":
+                setHeavenVisible(false);
+                setPurgatoryVisible(true);
+                setHellVisible(false);
+                break;
+            case "Hell":
+                setHeavenVisible(false);
+                setPurgatoryVisible(false);
+                setHellVisible(true);
+                break;
+        }
+    };
 
 	return (
 		<>

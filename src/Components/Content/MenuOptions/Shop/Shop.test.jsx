@@ -11,13 +11,11 @@ test('shop', () => {
     render(<Shop />);
     const title = screen.getByText(/shop/i);
     expect(title).toBeInTheDocument();
-    //expect(true).toBe(true);
 });
 
 test('shop2', () => {
     render(<Shop />);
     const shopElement = screen.getByTestId('shop-1');
-   // const title = screen.getByText(/shop/);
     expect(shopElement).toBeInTheDocument();
     expect(shopElement).toHaveTextContent('Shop');
 });
