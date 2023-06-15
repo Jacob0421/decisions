@@ -23,6 +23,8 @@ export function Content() {
 	const [isShopVisible, setIsShopVisible] = useState(true);
 	const [isStatsVisible, setIsStatsVisible] = useState(false);
 
+	const [demonCount, setDemonCount] = useState(0);
+
 	const [soulsAscending, setSoulsAscending] = useState({
 		maxQueueLength: 10,
 		queue: [],
@@ -92,6 +94,16 @@ export function Content() {
 		}
 	};
 
+	const handleFinalProcess = (levelName) => {
+		switch (levelName) {
+			case "Hell":
+				setDemonCount(demonCount + 1);
+				break;
+			default:
+				break;
+		}
+	};
+
 	return (
 		<>
 			<div className="right-pane">
@@ -106,7 +118,7 @@ export function Content() {
 					</div>
 					<div className="current-stats">
 						<p>Angels: &#123;Count&#125;</p>
-						<p>Devils: &#123;Count&#125;</p>
+						<p>Demons: {demonCount}</p>
 						<p>Money: &#123;Count&#125;</p>
 					</div>
 				</div>
@@ -132,6 +144,7 @@ export function Content() {
 						handleProcessedSoulFromQueue={
 							handleProcessedSoulFromQueue
 						}
+						handleFinalProcess={handleFinalProcess}
 					/>
 				</div>
 			</div>

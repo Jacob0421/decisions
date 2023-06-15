@@ -4,7 +4,11 @@
     width: 70vw;
 }
 .level {
+    display: flex;
+    flex-direction: column;
     height: 33.33vh;
+    overflow: hidden;
+    flex-wrap: wrap;
 }
 
 .purgatory {
@@ -39,9 +43,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .right-menu button {
+    flex-shrink: 0;
     height: 100%;
 }
 

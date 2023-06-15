@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import HornFitter from "../Workers/Hell/HornFitter";
 import TailAttacher from "../Workers/Hell/TailAttacher";
 import TridentDistributor from "../Workers/Hell/TridentDistributor";
+import TheDevil from "../Workers/Hell/TheDevil";
 
 export default function Hell(params) {
-	let { soulsDescending, handleProcessedSoulFromQueue } = params;
+	let { soulsDescending, handleProcessedSoulFromQueue, handleFinalProcess } =
+		params;
 
 	const [hornFitters, setHornFitters] = useState([
 		{
@@ -28,6 +30,12 @@ export default function Hell(params) {
 		},
 	]);
 
+	const [theDevil, setTheDevil] = useState({
+		timeToComplete: 7000,
+		queueMax: 5,
+		queue: [],
+	});
+
 	const handleComplete = (workerType, id, soul) => {
 		switch (workerType) {
 			case "HornFitter":
@@ -40,10 +48,35 @@ export default function Hell(params) {
 				break;
 			case "TridentDistributor":
 				const toDevil = removeDistributorsSoul(id);
+				sendSoulToDevil(toDevil);
+				break;
+			case "TheDevil":
+				removeDevilsSoul();
+				handleFinalProcess("Hell");
 				break;
 			default:
 				break;
 		}
+	};
+
+	const removeDevilsSoul = () => {
+		let devilData = theDevil;
+
+		devilData.queue = devilData.queue.filter((a, index) => index !== 0);
+
+		setTheDevil(devilData);
+	};
+
+	const sendSoulToDevil = (soul) => {
+		let devilData = theDevil;
+		if (devilData.queue.length >= devilData.queueMax) {
+			console.log(
+				"The Devil is too busy. Leave them to roam the floor endlessly"
+			);
+			return;
+		}
+
+		devilData.queue = [...devilData.queue, soul];
 	};
 
 	const findDistributorAndQueue = (soul) => {
@@ -63,7 +96,7 @@ export default function Hell(params) {
 	};
 
 	const removeDistributorsSoul = (workerId) => {
-		let distributorData = [...tailAttachers];
+		let distributorData = [...tridentDistibutors];
 		let currentDistributor = distributorData[workerId];
 
 		const toBeReturned = currentDistributor.queue[0];
@@ -142,6 +175,12 @@ export default function Hell(params) {
 					handleComplete={handleComplete}
 				/>
 			))}
+
+			<TheDevil
+				timeToComplete={theDevil.timeToComplete}
+				soul={theDevil.queue[0]}
+				handleComplete={handleComplete}
+			/>
 		</>
 	);
 }
