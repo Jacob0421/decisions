@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SoulData } from "../../../../../Data/Soul";
+import { SoulData } from "../../../../Data/Soul";
 
 export default function Reaper(params) {
 	const {

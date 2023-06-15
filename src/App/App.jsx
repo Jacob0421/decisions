@@ -3,6 +3,7 @@ import Purgatory from "./Levels/Purgatory/Purgatory";
 import Heaven from "./Levels/Heaven/Heaven";
 import Hell from "./Levels/Hell/Hell";
 import RightPane from "./RightPane/RightPane";
+import Explosion from "./Explosion";
 import "./App.css";
 
 export default function Content() {
@@ -143,7 +144,7 @@ export default function Content() {
 
 	return (
 		<>
-			{/* {isEnd ? "Yes" : "No"} */}
+			{isEnd ? <Explosion /> : ""}
 			<RightPane
 				angelCount={angelCount}
 				demonCount={demonCount}

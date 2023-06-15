@@ -1,5 +1,5 @@
 import React from "react";
-import { Upgrades, Consumables } from "../../../../Data/ShopItems";
+import { Upgrades, Consumables } from "../../../Data/ShopItems";
 import ShopItems from "./ShopItems/ShopItems";
 import "./Shop.css";
 
