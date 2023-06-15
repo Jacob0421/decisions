@@ -23,8 +23,6 @@ export default function Reaper(params) {
 			BadTraits: countBadTraits,
 		};
 
-		console.log(`Reaper ${id} - Passed`);
-
 		handleComplete("Reaper", id, soul);
 	}
 
@@ -34,9 +32,5 @@ export default function Reaper(params) {
 		return () => clearInterval(ticker);
 	}, []);
 
-	return (
-		<>
-			<h1>Reaper</h1>
-		</>
-	);
+	return <></>;
 }

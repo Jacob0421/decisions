@@ -42,18 +42,14 @@ export default function Purgatory(params) {
 				// findVerifierAndQueue Checks all verifiers for a queue that has a free space, then places soul. If there are none, soul is lost.
 				// Could possibly return true / false so that we can output different messages for each result.
 				findVerifierAndQueue(soul);
-				console.log("Purgatory - Set to Verifiers Queue");
 				break;
 
 			case "Verifier":
 				// Returns soul removed from the Verifiers queue
 				const toDeciders = removeSoul(id);
 
-				console.log("Purgatory - Verifier Refreshed");
-
 				// Takes the soul removed from pervious Verifier and finds a Decider queue to place it in
 				findDeciderAndQueue(toDeciders);
-				console.log("Purgatory - Set to Deciders Queue");
 				break;
 			default:
 				break;
@@ -83,9 +79,6 @@ export default function Purgatory(params) {
 		);
 
 		if (!availableVerifier) {
-			console.log(
-				"All Verifier Queues Filled. This soul is doomed to permanently roam the earth."
-			);
 			return;
 		}
 
@@ -103,9 +96,6 @@ export default function Purgatory(params) {
 		);
 
 		if (!availableDecider) {
-			console.log(
-				"All Decider Queues Filled. This soul is doomed to permanently roam the earth."
-			);
 			return;
 		}
 

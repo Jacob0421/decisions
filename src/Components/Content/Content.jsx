@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from "react";
-import Shop from "../Shop/Shop";
+import Shop from "./MenuOptions/Shop/Shop";
+import Stats from "./MenuOptions/Stats/Stats";
 import Purgatory from "../Levels/Purgatory";
 import Heaven from "../Levels/Heaven";
 import Hell from "../Levels/Hell";
+
+import "./Content.css";
 
 export function Content() {
 	// const handleNewWorker = (Level, buildingName) => {
@@ -17,7 +20,8 @@ export function Content() {
 	// 	}
 	// };
 
-	const [showShop, setShowShop] = useState(false);
+	const [isShopVisible, setIsShopVisible] = useState(true);
+	const [isStatsVisible, setIsStatsVisible] = useState(false);
 
 	const [soulsAscending, setSoulsAscending] = useState({
 		maxQueueLength: 10,
@@ -58,25 +62,57 @@ export function Content() {
 		});
 	};
 
-	const handleShopVisibility = () => {
-		setShowShop((current) => !current);
+	const handleMenuClick = (selectedPane) => {
+		switch (selectedPane) {
+			case "Shop":
+				setIsShopVisible(true);
+				setIsStatsVisible(false);
+				break;
+			case "Stats":
+				setIsShopVisible(false);
+				setIsStatsVisible(true);
+				break;
+		}
 	};
 
 	return (
 		<>
-			<button onClick={handleShopVisibility}>Show Shop</button>
+			<div className="right-pane">
+				<div className="right-menu">
+					<div>
+						<button onClick={() => handleMenuClick("Shop")}>
+							Shop
+						</button>
+						<button onClick={() => handleMenuClick("Stats")}>
+							Stats
+						</button>
+					</div>
+					<div className="current-stats">
+						<p>Angels: &#123;Count&#125;</p>
+						<p>Devils: &#123;Count&#125;</p>
+						<p>Money: &#123;Count&#125;</p>
+					</div>
+				</div>
+				<div className="right-content">
+					{isShopVisible && <Shop />}
+					{isStatsVisible && <Stats />}
+				</div>
+			</div>
+			<div className="level-container">
+				<div className="level heaven">
+					<Heaven soulsAscending={soulsAscending.queue} />
+				</div>
 
-			{showShop && <Shop />}
-			<Heaven soulsAscending={soulsAscending.queue} />
-			<p>Heaven Queue: {soulsAscending.queue.length}</p>
-
-			<Purgatory
-				handleAscension={handleAscension}
-				handleDescension={handleDescension}
-			/>
-
-			<p>Hell Queue: {soulsDescending.queue.length}</p>
-			<Hell soulsDescending={soulsDescending.queue} />
+				<div className="level purgatory">
+					<Purgatory
+						handleAscension={handleAscension}
+						handleDescension={handleDescension}
+					/>
+				</div>
+				<div className="level hell">
+					<Hell soulsDescending={soulsDescending.queue} />
+				</div>
+			</div>
 		</>
 	);
 }

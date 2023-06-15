@@ -26,8 +26,6 @@ export default function Decider(params) {
 			decisionBool = !decisionBool;
 		}
 
-		console.log(`Decider ${id + 1} - Passed`);
-
 		handleDecision(id, decisionBool, soul);
 	}
 
@@ -37,9 +35,5 @@ export default function Decider(params) {
 		return () => clearInterval(ticker);
 	}, [soul]);
 
-	return (
-		<>
-			<h1>Decider</h1>
-		</>
-	);
+	return <></>;
 }

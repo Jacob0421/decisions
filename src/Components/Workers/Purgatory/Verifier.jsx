@@ -8,8 +8,6 @@ export default function Verifier(params) {
 			return;
 		}
 
-		console.log(`Verifier ${id + 1} - Passed`);
-
 		handleComplete("Verifier", id, soul);
 	}
 
@@ -18,9 +16,5 @@ export default function Verifier(params) {
 		return () => clearInterval(ticker);
 	}, [soul]);
 
-	return (
-		<>
-			<h1>Verifier</h1>
-		</>
-	);
+	return <></>;
 }

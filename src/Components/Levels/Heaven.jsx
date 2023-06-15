@@ -42,6 +42,7 @@ export default function Heaven(params) {
 	return (
 		<>
 			<h1>Heaven</h1>
+			<p>Queue to Heaven: {soulsAscending.length}</p>
 		</>
 	);
 }
