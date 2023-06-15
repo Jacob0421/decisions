@@ -26,8 +26,6 @@ export default function Decider(params) {
 			decisionBool = !decisionBool;
 		}
 
-		console.log(`Decider ${id + 1} - Passed`);
-
 		handleDecision(id, decisionBool, soul);
 	}
 

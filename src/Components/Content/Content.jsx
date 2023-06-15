@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from "react";
-import Shop from "../Shop/Shop";
+import Shop from "./MenuOptions/Shop/Shop";
+import Stats from "./MenuOptions/Stats/Stats";
 import Purgatory from "../Levels/Purgatory";
 import Heaven from "../Levels/Heaven";
 import Hell from "../Levels/Hell";
+import "./Content.css";
 
 export default function Content() {
 	// const handleNewWorker = (Level, buildingName) => {
@@ -17,7 +19,11 @@ export default function Content() {
 	// 	}
 	// };
 
-	const [showShop, setShowShop] = useState(false);
+	const [isShopVisible, setIsShopVisible] = useState(true);
+	const [isStatsVisible, setIsStatsVisible] = useState(false);
+
+	const [demonCount, setDemonCount] = useState(0);
+	const [angelCount, setAngelCount] = useState(0);
 
 	const [soulsAscending, setSoulsAscending] = useState({
 		maxQueueLength: 10,
@@ -32,9 +38,9 @@ export default function Content() {
 		let ascensionData = soulsAscending;
 
 		if (ascensionData.queue.length >= ascensionData.maxQueueLength) {
-			console.log(
-				"No room in the Ascension queue. This soul is left to roam in purgatory"
-			);
+			// console.log(
+			// 	"No room in the Ascension queue. This soul is left to roam in purgatory"
+			// );
 			return;
 		}
 
@@ -47,9 +53,9 @@ export default function Content() {
 		let descensionData = soulsDescending;
 
 		if (descensionData.queue.length >= descensionData.maxQueueLength) {
-			console.log(
-				"No room in the Descension queue. This soul is left to roam in purgatory"
-			);
+			// console.log(
+			// 	"No room in the Descension queue. This soul is left to roam in purgatory"
+			// );
 			return;
 		}
 
@@ -58,15 +64,57 @@ export default function Content() {
 		});
 	};
 
-	const [buttonText, setButtonText] = useState("Show Shop");
+	const handleMenuClick = (selectedPane) => {
+		switch (selectedPane) {
+			case "Shop":
+				setIsShopVisible(true);
+				setIsStatsVisible(false);
+				break;
+			case "Stats":
+				setIsShopVisible(false);
+				setIsStatsVisible(true);
+				break;
+		}
+	};
 
-	const changeText = (text) => {
-		setButtonText(text);
-	}
+	const handleProcessedSoulFromQueue = (levelName) => {
+		switch (levelName) {
+			case "Hell":
+				setSoulsDescending((prev) => {
+					return {
+						...prev,
+						queue: [
+							...prev.queue.filter((soul, index) => index !== 0),
+						],
+					};
+				});
+				break;
+			case "Heaven":
+				setSoulsAscending((prev) => {
+					return {
+						...prev,
+						queue: [
+							...prev.queue.filter((soul, index) => index !== 0),
+						],
+					};
+				});
+				break;
+			default:
+				break;
+		}
+	};
 
-	const handleShopVisibility = () => {
-		setShowShop((current) => !current);
-		if (showShop ? changeText("Show Shop") : changeText("Hide Shop"));
+	const handleFinalProcess = (levelName) => {
+		switch (levelName) {
+			case "Hell":
+				setDemonCount(demonCount + 1);
+				break;
+			case "Heaven":
+				setAngelCount(angelCount + 1);
+				break;
+			default:
+				break;
+		}
 	};
 
 	const [heavenVisible, setHeavenVisible] = useState(false);
@@ -94,20 +142,55 @@ export default function Content() {
     };
 
 	return (
-		<div data-testID="content-1">
-			<button onClick={handleShopVisibility}>{buttonText}</button>
+		<>
+			<div className="right-pane">
+				<div className="right-menu">
+					<div>
+						<button onClick={() => handleMenuClick("Shop")}>
+							Shop
+						</button>
+						<button onClick={() => handleMenuClick("Stats")}>
+							Stats
+						</button>
+					</div>
+					<div className="current-stats">
+						<p>Angels: {angelCount}</p>
+						<p>Demons: {demonCount}</p>
+						<p>Money: &#123;Count&#125;</p>
+					</div>
+				</div>
+				<div className="right-content">
+					{isShopVisible && <Shop />}
+					{isStatsVisible && <Stats />}
+				</div>
+			</div>
+			<div className="level-container">
+				<div className="level heaven">
+					<Heaven
+						soulsAscending={soulsAscending.queue}
+						handleProcessedSoulFromQueue={
+							handleProcessedSoulFromQueue
+						}
+						handleFinalProcess={handleFinalProcess}
+					/>
+				</div>
 
-			{showShop && <Shop />}
-			<Heaven soulsAscending={soulsAscending.queue} />
-			<p>Heaven Queue: {soulsAscending.queue.length}</p>
-
-			<Purgatory
-				handleAscension={handleAscension}
-				handleDescension={handleDescension}
-			/>
-
-			<p>Hell Queue: {soulsDescending.queue.length}</p>
-			<Hell soulsDescending={soulsDescending.queue} />
-		</div>
+				<div className="level purgatory">
+					<Purgatory
+						handleAscension={handleAscension}
+						handleDescension={handleDescension}
+					/>
+				</div>
+				<div className="level hell">
+					<Hell
+						soulsDescending={soulsDescending.queue}
+						handleProcessedSoulFromQueue={
+							handleProcessedSoulFromQueue
+						}
+						handleFinalProcess={handleFinalProcess}
+					/>
+				</div>
+			</div>
+		</>
 	);
 }

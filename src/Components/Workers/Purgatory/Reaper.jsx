@@ -23,8 +23,6 @@ export default function Reaper(params) {
 			BadTraits: countBadTraits,
 		};
 
-		console.log(`Reaper ${id} - Passed`);
-
 		handleComplete("Reaper", id, soul);
 	}
 
