@@ -1,26 +1,14 @@
 import React, { useCallback, useState } from "react";
-import Shop from "./MenuOptions/Shop/Shop";
-import Stats from "./MenuOptions/Stats/Stats";
-import Purgatory from "../Levels/Purgatory";
-import Heaven from "../Levels/Heaven";
-import Hell from "../Levels/Hell";
-import "./Content.css";
+import Purgatory from "./Levels/Purgatory/Purgatory";
+import Heaven from "./Levels/Heaven/Heaven";
+import Hell from "./Levels/Hell/Hell";
+import RightPane from "./RightPane/RightPane";
+import Explosion from "./Explosion";
+import "./App.css";
 
 export default function Content() {
-	// const handleNewWorker = (Level, buildingName) => {
-	// 	switch (Level) {
-	// 		case "Reaper":
-	// 			let reaperData = GetReaper;
-	// 			reaperData.workerCount += 1;
-	// 			break;
-
-	// 		default:
-	// 			break;
-	// 	}
-	// };
-
-	const [isShopVisible, setIsShopVisible] = useState(true);
-	const [isStatsVisible, setIsStatsVisible] = useState(false);
+	const [timeTaken, setTimeTaken] = useState(Date.now());
+	const [isEnd, setIsEnd] = useState(false);
 
 	const [demonCount, setDemonCount] = useState(0);
 	const [angelCount, setAngelCount] = useState(0);
@@ -64,19 +52,6 @@ export default function Content() {
 		});
 	};
 
-	const handleMenuClick = (selectedPane) => {
-		switch (selectedPane) {
-			case "Shop":
-				setIsShopVisible(true);
-				setIsStatsVisible(false);
-				break;
-			case "Stats":
-				setIsShopVisible(false);
-				setIsStatsVisible(true);
-				break;
-		}
-	};
-
 	const handleProcessedSoulFromQueue = (levelName) => {
 		switch (levelName) {
 			case "Hell":
@@ -117,53 +92,65 @@ export default function Content() {
 		}
 	};
 
-	const [heavenVisible, setHeavenVisible] = useState(false);
-    const [purgatoryVisible, setPurgatoryVisible] = useState(true);
-    const [hellVisible, setHellVisible] = useState(false);
+	const [hellItemBought, setHellItemBought] = useState({});
+	const [purgatoryItemBought, setPurgatoryItemBought] = useState({});
 
-    const handleClick = (levelName) => {
-        switch (levelName) {
-            case "Heaven":
-                setHeavenVisible(true);
-                setPurgatoryVisible(false);
-                setHellVisible(false);
-                break;
-            case "Purgatory":
-                setHeavenVisible(false);
-                setPurgatoryVisible(true);
-                setHellVisible(false);
-                break;
-            case "Hell":
-                setHeavenVisible(false);
-                setPurgatoryVisible(false);
-                setHellVisible(true);
-                break;
-        }
-    };
+	const handleBuy = (upgradeObject) => {
+		if (upgradeObject.itemCost > money) {
+			return;
+		}
+
+		setMoney((prev) => prev - upgradeObject.itemCost);
+
+		console.log(upgradeObject);
+		if (
+			upgradeObject.buildingAffected === "God" &&
+			upgradeObject.upgradeModifiers.worker === 1
+		) {
+			setTimeTaken((prev) => prev - Date.now);
+			setIsEnd(true);
+
+			console.log(`Time Taken: ${timeTaken} isEnd: ${isEnd}`);
+		}
+
+		switch (upgradeObject.levelAffected) {
+			case "Hell":
+				setHellItemBought(upgradeObject);
+				break;
+			case "Purgatory":
+				console.log(upgradeObject);
+				setPurgatoryItemBought(upgradeObject);
+				break;
+			default:
+				break;
+		}
+	};
+
+	const handleBuyCompleted = (levelName) => {
+		switch (levelName) {
+			case "Purgatory":
+				setPurgatoryItemBought({});
+				break;
+			default:
+				break;
+		}
+	};
+
+	const [money, setMoney] = useState(0);
+
+	const handleRevenue = (revenue) => {
+		setMoney((prev) => prev + revenue);
+	};
 
 	return (
 		<>
-			<div className="right-pane">
-				<div className="right-menu">
-					<div>
-						<button onClick={() => handleMenuClick("Shop")}>
-							Shop
-						</button>
-						<button onClick={() => handleMenuClick("Stats")}>
-							Stats
-						</button>
-					</div>
-					<div className="current-stats">
-						<p>Angels: {angelCount}</p>
-						<p>Demons: {demonCount}</p>
-						<p>Money: &#123;Count&#125;</p>
-					</div>
-				</div>
-				<div className="right-content">
-					{isShopVisible && <Shop />}
-					{isStatsVisible && <Stats />}
-				</div>
-			</div>
+			{isEnd ? <Explosion /> : ""}
+			<RightPane
+				angelCount={angelCount}
+				demonCount={demonCount}
+				money={money}
+				handleBuy={handleBuy}
+			/>
 			<div className="level-container">
 				<div className="level heaven">
 					<Heaven
@@ -179,6 +166,9 @@ export default function Content() {
 					<Purgatory
 						handleAscension={handleAscension}
 						handleDescension={handleDescension}
+						itemBought={purgatoryItemBought}
+						handleBuyCompleted={handleBuyCompleted}
+						handleRevenue={handleRevenue}
 					/>
 				</div>
 				<div className="level hell">
@@ -188,6 +178,7 @@ export default function Content() {
 							handleProcessedSoulFromQueue
 						}
 						handleFinalProcess={handleFinalProcess}
+						itemBought={hellItemBought}
 					/>
 				</div>
 			</div>
