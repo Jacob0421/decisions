@@ -1,13 +1,24 @@
 import React, { useEffect } from "react";
 
 export default function Decider(params) {
-	const { id, soul, timeToComplete, percentCorrect, handleDecision } = params;
+	const {
+		souls,
+		timeToComplete,
+		percentCorrect,
+		handleDecision,
+		revenueGenerated,
+		handleRevenue,
+		queueMax,
+		workerCount,
+	} = params;
 
 	function processSoul() {
 		// probably will clean this up later. throws app breaking error if tries to read undefined
-		if (!soul) {
+		if (souls.length === 0) {
 			return;
 		}
+
+		let soul = souls[0];
 
 		// false = go to hell, true = go to heaven
 		let decisionBool = false;
@@ -26,18 +37,26 @@ export default function Decider(params) {
 			decisionBool = !decisionBool;
 		}
 
-		handleDecision(id, decisionBool, soul);
+		handleRevenue(revenueGenerated);
+		handleDecision(decisionBool, soul);
 	}
 
 	useEffect(() => {
 		const ticker = setInterval(() => processSoul(), timeToComplete);
 
 		return () => clearInterval(ticker);
-	}, [soul]);
+	}, [souls]);
 
 	return (
-		<>
-			<h1>Decider</h1>
-		</>
+		<div className="Worker">
+			<h3>Deciders</h3>
+			<div className="worker-details">
+				<p>
+					Queue: {souls.length}/{queueMax}
+				</p>
+				<p>Worker Count: {workerCount}</p>
+				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>
+			</div>
+		</div>
 	);
 }
