@@ -1,24 +1,46 @@
 import React, { useEffect } from "react";
 
 export default function HaloDistributor(params) {
-	const { id, timeToComplete, soul, handleComplete } = params;
+	const {
+		timeToComplete,
+		souls,
+		handleComplete,
+		revenueGenerated,
+		handleRevenue,
+		workerCount,
+		queueMax,
+	} = params;
+
+	let isProcessing = false;
 
 	function processSoul() {
-		handleComplete("HaloDistributor", id, soul);
+		isProcessing = true;
+		handleRevenue(revenueGenerated);
+		handleComplete("HaloDistributor", souls);
+		isProcessing = false;
 	}
 
 	useEffect(() => {
-		if (!soul) {
+		if (souls.length === 0) {
 			return;
 		}
 
-		let ticker = setInterval(() => processSoul(), timeToComplete);
-		return () => clearInterval(ticker);
-	}, [soul]);
+		if (!isProcessing) {
+			let ticker = setInterval(() => processSoul(), timeToComplete);
+			return () => clearInterval(ticker);
+		}
+	}, [souls]);
 
 	return (
-		<>
-			<h1>Halo Distributor</h1>
-		</>
+		<div className="Worker">
+			<h3>Halo Distributor</h3>
+			<div className="worker-details">
+				<p>
+					Queue: {souls.length}/{queueMax}
+				</p>
+				<p>Worker Count: {workerCount}</p>
+				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>
+			</div>
+		</div>
 	);
 }

@@ -1,24 +1,47 @@
 import React, { useEffect } from "react";
 
 export default function Verifier(params) {
-	const { id, timeToComplete, soul, handleComplete } = params;
+	const {
+		timeToComplete,
+		souls,
+		queueMax,
+		handleComplete,
+		handleRevenue,
+		revenueGenerated,
+		workerCount,
+	} = params;
+
+	let isProcessing = false;
 
 	function verifySoul() {
-		if (!soul) {
-			return;
-		}
-
-		handleComplete("Verifier", id, soul);
+		isProcessing = true;
+		handleRevenue(revenueGenerated);
+		handleComplete("Verifier", souls[0]);
+		isProcessing = false;
 	}
 
 	useEffect(() => {
-		let ticker = setInterval(() => verifySoul(), timeToComplete);
-		return () => clearInterval(ticker);
-	}, [soul]);
+		if (Array.isArray(souls) || souls.length === 0) {
+			return;
+		}
+
+		if (!isProcessing) {
+			const ticker = setInterval(() => verifySoul(), timeToComplete);
+
+			return () => clearInterval(ticker);
+		}
+	}, [souls]);
 
 	return (
-		<>
-			<h1>Verifier</h1>
-		</>
+		<div className="Worker">
+			<h3>Verifiers</h3>
+			<div className="worker-details">
+				<p>
+					Queue: {souls?.length}/{queueMax}
+				</p>
+				<p>Worker Count: {workerCount}</p>
+				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>
+			</div>
+		</div>
 	);
 }

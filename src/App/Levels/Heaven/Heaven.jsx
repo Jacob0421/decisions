@@ -1,54 +1,69 @@
 import React, { useState, useEffect } from "react";
+
+import {
+	WelcomerInitial,
+	WingReceptionistInitial,
+	HaloDistributorInitial,
+	GodInitial,
+} from "../../../Data/DataIntialization/Heaven";
+
 import Welcomer from "./Workers/Welcomer";
 import WingReceptionist from "./Workers/WingReceptionist";
-import God from "./Workers/God";
 import HaloDistributor from "./Workers/HaloDistributor";
+import God from "./Workers/God";
+
+import styles from "./Heaven.module.css";
 
 export default function Heaven(params) {
-	let { soulsAscending, handleProcessedSoulFromQueue, handleFinalProcess } =
-		params;
+	let {
+		soulsAscending,
+		soulsAscendingQueueMax,
+		handleProcessedSoulFromQueue,
+		handleFinalProcess,
+		handleRevenue,
+	} = params;
 
-	const [welcomers, setWelcomers] = useState([
-		{
-			name: "Wally",
-			timeToComplete: 4000,
-		},
-	]);
+	const [welcomers, setWelcomers] = useState({
+		workers: WelcomerInitial.workers,
+		timeToComplete: WelcomerInitial.timeToComplete,
+		revenueGenerated: WelcomerInitial.revenueGenerated,
+	});
 
-	const [wingReceptionists, setWingReceptionists] = useState([
-		{
-			timeToComplete: 5000,
-			queueMax: 5,
-			queue: [],
-		},
-	]);
-
-	const [haloDistibutors, setHaloDistributors] = useState([
-		{
-			timeToComplete: 6000,
-			queueMax: 5,
-			queue: [],
-		},
-	]);
-
-	const [god, setGod] = useState({
-		timeToComplete: 7000,
-		queueMax: 5,
+	const [wingReceptionists, setWingReceptionists] = useState({
+		workers: WingReceptionistInitial.workers,
+		timeToComplete: WingReceptionistInitial.timeToComplete,
+		revenueGenerated: WingReceptionistInitial.revenueGenerated,
+		queueMax: WingReceptionistInitial.queueMax,
 		queue: [],
 	});
 
-	const handleComplete = (workerType, id, soul) => {
+	const [haloDistibutors, setHaloDistributors] = useState({
+		workers: HaloDistributorInitial.workers,
+		timeToComplete: HaloDistributorInitial.timeToComplete,
+		revenueGenerated: HaloDistributorInitial.revenueGenerated,
+		queueMax: HaloDistributorInitial.queueMax,
+		queue: [],
+	});
+
+	const [god, setGod] = useState({
+		timeToComplete: GodInitial.timeToComplete,
+		revenueGenerated: GodInitial.revenueGenerated,
+		queueMax: GodInitial.queueMax,
+		queue: [],
+	});
+
+	const handleComplete = (workerType, soul) => {
 		switch (workerType) {
 			case "Welcomer":
-				findReceptionistAndQueue(soul);
+				queueWithReceptionists(soul);
 				handleProcessedSoulFromQueue("Heaven");
 				break;
 			case "WingReceptionist":
-				let toDistributer = removeReceptionistsSoul(id);
-				findDistributorAndQueue(toDistributer);
+				const toDistributer = removeReceptionistsSoul();
+				queueWithDistributors(toDistributer);
 				break;
 			case "HaloDistributor":
-				const toGod = removeDistributorsSoul(id);
+				const toGod = removeDistributorsSoul();
 				sendSoulToGod(toGod);
 				break;
 			case "God":
@@ -69,116 +84,97 @@ export default function Heaven(params) {
 	};
 
 	const sendSoulToGod = (soul) => {
-		let godData = god;
-		if (godData.queue.length >= godData.queueMax) {
-			console.log("Patience is a virtue. Maybe we can talk later..");
-			return;
+		if (god.queue.length < god.queueMax) {
+			setGod({ ...god, queue: [...god.queue, soul] });
+		} else {
 		}
-
-		godData.queue = [...godData.queue, soul];
-
-		setGod(godData);
 	};
 
-	const findDistributorAndQueue = (soul) => {
-		let distributorData = [...haloDistibutors];
-		let availableDistributor = distributorData.find(
-			(a) => a.queue.length < a.queueMax
-		);
-
-		if (!availableDistributor) {
-			console.log("All Distibutors full.");
-			return;
+	const queueWithDistributors = (soul) => {
+		if (haloDistibutors.queue.length < haloDistibutors.queueMax) {
+			setHaloDistributors({
+				...haloDistibutors,
+				queue: [...haloDistibutors.queue, soul],
+			});
+		} else {
 		}
-
-		availableDistributor.queue = [...availableDistributor.queue, soul];
-
-		setHaloDistributors(distributorData);
 	};
 
-	const removeDistributorsSoul = (workerId) => {
-		let distributorData = [...haloDistibutors];
-		let currentDistributor = distributorData[workerId];
+	const removeDistributorsSoul = () => {
+		const toBeReturned = haloDistibutors.queue[0];
 
-		const toBeReturned = currentDistributor.queue[0];
-
-		currentDistributor.queue = currentDistributor.queue.filter(
-			(a, index) => index !== 0
-		);
-
-		setHaloDistributors(distributorData);
+		setHaloDistributors({
+			...haloDistibutors,
+			queue: haloDistibutors.queue.filter((a, index) => index !== 0),
+		});
 
 		return toBeReturned;
 	};
 
-	const removeReceptionistsSoul = (workerId) => {
-		let receptionistData = [...wingReceptionists];
-		let currentReceptionist = receptionistData[workerId];
+	const removeReceptionistsSoul = () => {
+		const toBeReturned = wingReceptionists.queue[0];
 
-		const toBeReturned = currentReceptionist.queue[0];
+		setWingReceptionists({
+			...wingReceptionists,
+			queue: wingReceptionists.queue.filter((a, index) => index !== 0),
+		});
 
-		currentReceptionist.queue = currentReceptionist.queue.filter(
-			(a, index) => index !== 0
-		);
-
-		setWingReceptionists(receptionistData);
 		return toBeReturned;
 	};
 
 	// For HornFitter
-	const findReceptionistAndQueue = (soul) => {
-		let receptionistData = [...wingReceptionists];
-		let availableReceptionist = receptionistData.find(
-			(r) => r.queue.length < r.queueMax
-		);
-
-		if (!availableReceptionist) {
-			console.log("All Attachers full.");
-			return;
+	const queueWithReceptionists = (soul) => {
+		if (wingReceptionists.queue.length < wingReceptionists.queueMax) {
+			setWingReceptionists({
+				...wingReceptionists,
+				queue: [...wingReceptionists.queue, soul],
+			});
+		} else {
 		}
-
-		availableReceptionist.queue = [...availableReceptionist.queue, soul];
-
-		setWingReceptionists(receptionistData);
 	};
 
 	return (
 		<>
-			<God
-				timeToComplete={god.timeToComplete}
-				soul={god.queue[0]}
-				handleComplete={handleComplete}
-			/>
-
-			{haloDistibutors.map((distributor, index) => (
-				<HaloDistributor
-					key={index}
-					id={index}
-					timeToComplete={distributor.timeToComplete}
-					soul={distributor.queue[0]}
-					handleComplete={handleComplete}
-				/>
-			))}
-			{wingReceptionists.map((receptionist, index) => (
-				<WingReceptionist
-					key={index}
-					id={index}
-					timeToComplete={receptionist.timeToComplete}
-					soul={receptionist.queue[0]}
-					handleComplete={handleComplete}
-				/>
-			))}
-			{welcomers.map((welcomer, index) => (
+			<h1 className="title">Heaven</h1>
+			<div className={styles.workerContainer}>
 				<Welcomer
-					key={index}
-					id={index}
-					timeToComplete={welcomer.timeToComplete}
-					soul={soulsAscending[0]}
+					timeToComplete={welcomers.timeToComplete}
+					souls={soulsAscending}
 					handleComplete={handleComplete}
+					queueMax={soulsAscendingQueueMax}
+					handleRevenue={handleRevenue}
+					revenueGenerated={welcomers.revenueGenerated}
+					workerCount={welcomers.workers}
 				/>
-			))}
-			<h1>Heaven</h1>
-			<p>Queue to Heaven: {soulsAscending.length}</p>
+
+				<WingReceptionist
+					timeToComplete={wingReceptionists.timeToComplete}
+					souls={wingReceptionists.queue}
+					handleComplete={handleComplete}
+					handleRevenue={handleRevenue}
+					revenueGenerated={wingReceptionists.revenueGenerated}
+					workerCount={wingReceptionists.workers}
+					queueMax={wingReceptionists.queueMax}
+				/>
+
+				<HaloDistributor
+					timeToComplete={haloDistibutors.timeToComplete}
+					souls={haloDistibutors.queue}
+					handleComplete={handleComplete}
+					handleRevenue={handleRevenue}
+					revenueGenerated={haloDistibutors.revenueGenerated}
+					workerCount={haloDistibutors.workers}
+					queueMax={haloDistibutors.queueMax}
+				/>
+				<God
+					timeToComplete={god.timeToComplete}
+					souls={god.queue}
+					handleComplete={handleComplete}
+					handleRevenue={handleRevenue}
+					revenueGenerated={god.revenueGenerated}
+					queueMax={god.queueMax}
+				/>
+			</div>
 		</>
 	);
 }

@@ -5,9 +5,9 @@ export default function Reaper(params) {
 	const {
 		timeToComplete,
 		handleComplete,
-		id,
 		revenueGenerated,
 		handleRevenue,
+		workerCount,
 	} = params;
 
 	function GenerateSoul() {
@@ -29,20 +29,23 @@ export default function Reaper(params) {
 			BadTraits: countBadTraits,
 		};
 
-		// console.log(`Reaper ${id} Completed`);
 		handleRevenue(revenueGenerated);
-		handleComplete("Reaper", id, soul);
+		handleComplete("Reaper", soul);
 	}
 
 	useEffect(() => {
 		const ticker = setInterval(() => GenerateSoul(), timeToComplete);
 
 		return () => clearInterval(ticker);
-	}, []);
+	});
 
 	return (
-		<>
-			<h1>Reaper</h1>
-		</>
+		<div className="Worker">
+			<h3>Reapers</h3>
+			<div className="worker-details">
+				<p>Count:{workerCount}</p>
+				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>
+			</div>
+		</div>
 	);
 }

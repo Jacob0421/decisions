@@ -14,18 +14,18 @@ export default function Content() {
 	const [angelCount, setAngelCount] = useState(0);
 
 	const [soulsAscending, setSoulsAscending] = useState({
-		maxQueueLength: 10,
+		queueMax: 10,
 		queue: [],
 	});
 	const [soulsDescending, setSoulsDescending] = useState({
-		maxQueueLength: 10,
+		queueMax: 10,
 		queue: [],
 	});
 
 	const handleAscension = (soul) => {
 		let ascensionData = soulsAscending;
 
-		if (ascensionData.queue.length >= ascensionData.maxQueueLength) {
+		if (ascensionData.queue.length >= ascensionData.queueMax) {
 			// console.log(
 			// 	"No room in the Ascension queue. This soul is left to roam in purgatory"
 			// );
@@ -40,7 +40,7 @@ export default function Content() {
 	const handleDescension = (soul) => {
 		let descensionData = soulsDescending;
 
-		if (descensionData.queue.length >= descensionData.maxQueueLength) {
+		if (descensionData.queue.length >= descensionData.queueMax) {
 			// console.log(
 			// 	"No room in the Descension queue. This soul is left to roam in purgatory"
 			// );
@@ -101,8 +101,6 @@ export default function Content() {
 		}
 
 		setMoney((prev) => prev - upgradeObject.itemCost);
-
-		console.log(upgradeObject);
 		if (
 			upgradeObject.buildingAffected === "God" &&
 			upgradeObject.upgradeModifiers.worker === 1
@@ -118,13 +116,12 @@ export default function Content() {
 				setHellItemBought(upgradeObject);
 				break;
 			case "Purgatory":
-				console.log(upgradeObject);
 				setPurgatoryItemBought(upgradeObject);
 				break;
 			default:
 				break;
 		}
-	};
+	}; 
 
 	const handleBuyCompleted = (levelName) => {
 		switch (levelName) {
@@ -136,7 +133,7 @@ export default function Content() {
 		}
 	};
 
-	const [money, setMoney] = useState(0);
+	const [money, setMoney] = useState(1000);
 
 	const handleRevenue = (revenue) => {
 		setMoney((prev) => prev + revenue);
@@ -144,7 +141,7 @@ export default function Content() {
 
 	return (
 		<>
-			{isEnd ? <Explosion /> : ""}
+			{/* {isEnd ? <Explosion /> : ""} */}
 			<RightPane
 				angelCount={angelCount}
 				demonCount={demonCount}
@@ -152,17 +149,19 @@ export default function Content() {
 				handleBuy={handleBuy}
 			/>
 			<div className="level-container">
-				<div className="level heaven">
+				<div className="heaven">
 					<Heaven
 						soulsAscending={soulsAscending.queue}
+						soulsAscendingQueueMax={soulsAscending.queueMax}
 						handleProcessedSoulFromQueue={
 							handleProcessedSoulFromQueue
 						}
 						handleFinalProcess={handleFinalProcess}
+						handleRevenue={handleRevenue}
 					/>
 				</div>
 
-				<div className="level purgatory">
+				<div className="purgatory">
 					<Purgatory
 						handleAscension={handleAscension}
 						handleDescension={handleDescension}
@@ -171,7 +170,7 @@ export default function Content() {
 						handleRevenue={handleRevenue}
 					/>
 				</div>
-				<div className="level hell">
+				<div className="hell">
 					<Hell
 						soulsDescending={soulsDescending.queue}
 						handleProcessedSoulFromQueue={
@@ -179,6 +178,8 @@ export default function Content() {
 						}
 						handleFinalProcess={handleFinalProcess}
 						itemBought={hellItemBought}
+						soulsDescendingQueueMax={soulsDescending.queueMax}
+						handleRevenue={handleRevenue}
 					/>
 				</div>
 			</div>

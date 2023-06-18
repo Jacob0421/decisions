@@ -8,7 +8,7 @@ export default function Shop(params) {
 
 	return (
 		<div className="content center-text">
-			<span className="title">Shop</span>
+			<span className="shop-title">Shop</span>
 
 			<div className="shop-divider"></div>
 

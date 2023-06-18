@@ -1,24 +1,44 @@
 import React, { useEffect } from "react";
 
 export default function God(params) {
-	const { id, timeToComplete, soul, handleComplete } = params;
+	const {
+		timeToComplete,
+		souls,
+		handleComplete,
+		handleRevenue,
+		revenueGenerated,
+		queueMax,
+	} = params;
+
+	let isProcessing = false;
 
 	function processSoul() {
-		handleComplete("God", id, soul);
+		isProcessing = true;
+		handleRevenue(revenueGenerated);
+		handleComplete("God", souls[0]);
+		isProcessing = false;
 	}
 
 	useEffect(() => {
-		if (!soul) {
+		if (souls.length === 0) {
 			return;
 		}
+		if (!isProcessing) {
+			let ticker = setInterval(() => processSoul(), timeToComplete);
 
-		let ticker = setInterval(() => processSoul(), timeToComplete);
-		return () => clearInterval(ticker);
-	}, [soul]);
+			return () => clearInterval(ticker);
+		}
+	}, [souls]);
 
 	return (
-		<>
-			<h1>God</h1>
-		</>
+		<div className="Worker">
+			<h3>God</h3>
+			<div className="worker-details">
+				<p>
+					Queue: {souls.length}/{queueMax}
+				</p>
+				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>
+			</div>
+		</div>
 	);
 }

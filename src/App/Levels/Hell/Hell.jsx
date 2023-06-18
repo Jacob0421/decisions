@@ -1,53 +1,70 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
+
+import {
+	HornFitterInitial,
+	TailAttacherInitial,
+	TridentDistributorInitial,
+	TheDevilInitial,
+} from "../../../Data/DataIntialization/Hell";
+
 import HornFitter from "./Workers/HornFitter";
 import TailAttacher from "./Workers/TailAttacher";
 import TridentDistributor from "./Workers/TridentDistributor";
 import TheDevil from "./Workers/TheDevil";
 
+import styles from "./Hell.module.css";
+
 export default function Hell(params) {
-	let { soulsDescending, handleProcessedSoulFromQueue, handleFinalProcess, itemBought} =
-		params;
+	let {
+		soulsDescending,
+		handleProcessedSoulFromQueue,
+		handleFinalProcess,
+		itemBought,
+		soulsDescendingQueueMax,
+		handleRevenue,
+	} = params;
 
-	const [hornFitters, setHornFitters] = useState([
-		{
-			timeToComplete: 4000,
-		},
-	]);
+	const [hornFitters, setHornFitters] = useState({
+		workers: HornFitterInitial.workers,
+		timeToComplete: HornFitterInitial.timeToComplete,
+		revenueGenerated: HornFitterInitial.revenueGenerated,
+	});
 
-	const [tailAttachers, setTailAttachers] = useState([
-		{
-			timeToComplete: 5000,
-			queueMax: 5,
-			queue: [],
-		},
-	]);
-
-	const [tridentDistibutors, setTridentDistributors] = useState([
-		{
-			timeToComplete: 6000,
-			queueMax: 5,
-			queue: [],
-		},
-	]);
-
-	const [theDevil, setTheDevil] = useState({
-		timeToComplete: 7000,
-		queueMax: 5,
+	const [tailAttachers, setTailAttachers] = useState({
+		workers: TailAttacherInitial.workers,
+		timeToComplete: TailAttacherInitial.timeToComplete,
+		revenueGenerated: TailAttacherInitial.revenueGenerated,
+		queueMax: TailAttacherInitial.queueMax,
 		queue: [],
 	});
 
-	const handleComplete = (workerType, id, soul) => {
+	const [tridentDistibutors, setTridentDistributors] = useState({
+		workers: TridentDistributorInitial.workers,
+		timeToComplete: TridentDistributorInitial.timeToComplete,
+		revenueGenerated: TridentDistributorInitial.revenueGenerated,
+		queueMax: TridentDistributorInitial.queueMax,
+		queue: [],
+	});
+
+	const [theDevil, setTheDevil] = useState({
+		timeToComplete: TheDevilInitial.timeToComplete,
+		revenueGenerated: TheDevilInitial.revenueGenerated,
+		queueMax: TheDevilInitial.queueMax,
+		queue: [],
+	});
+
+	const handleComplete = (workerType, soul) => {
 		switch (workerType) {
 			case "HornFitter":
-				findAttacherAndQueue(soul);
+				queueWithAttacher(soul);
 				handleProcessedSoulFromQueue("Hell");
 				break;
 			case "TailAttacher":
-				let toDistributer = removeAttachersSoul(id);
-				findDistributorAndQueue(toDistributer);
+				let toDistributer = removeAttachersSoul();
+				queueWithDistributor(toDistributer);
 				break;
 			case "TridentDistributor":
-				const toDevil = removeDistributorsSoul(id);
+				const toDevil = removeDistributorsSoul();
 				sendSoulToDevil(toDevil);
 				break;
 			case "TheDevil":
@@ -60,129 +77,98 @@ export default function Hell(params) {
 	};
 
 	const removeDevilsSoul = () => {
-		let devilData = theDevil;
-
-		devilData.queue = devilData.queue.filter((a, index) => index !== 0);
-
-		setTheDevil(devilData);
+		setTheDevil({
+			...theDevil,
+			queue: [theDevil.queue.filter((s, index) => index !== 0)],
+		});
 	};
 
 	const sendSoulToDevil = (soul) => {
-		let devilData = theDevil;
-		if (devilData.queue.length >= devilData.queueMax) {
-			console.log(
-				"The Devil is too busy. Leave them to roam the floor endlessly"
-			);
-			return;
-		}
-
-		devilData.queue = [...devilData.queue, soul];
-
-		setTheDevil(devilData);
+		setTheDevil({ ...theDevil, queue: [...theDevil.queue, soul] });
 	};
 
-	const findDistributorAndQueue = (soul) => {
-		let distributorData = [...tridentDistibutors];
-		let availableDistributor = distributorData.find(
-			(a) => a.queue.length < a.queueMax
-		);
-
-		if (!availableDistributor) {
-			console.log("All Distibutors full.");
-			return;
+	const queueWithDistributor = (soul) => {
+		if (tridentDistibutors.queue.length < tridentDistibutors.queueMax) {
+			setTridentDistributors({
+				...tridentDistibutors,
+				queue: [tridentDistibutors.queue, soul],
+			});
 		}
-
-		availableDistributor.queue = [...availableDistributor.queue, soul];
-
-		setTridentDistributors(distributorData);
 	};
 
 	const removeDistributorsSoul = (workerId) => {
-		let distributorData = [...tridentDistibutors];
-		let currentDistributor = distributorData[workerId];
+		const toBeReturned = tridentDistibutors.queue[0];
 
-		const toBeReturned = currentDistributor.queue[0];
-
-		currentDistributor.queue = currentDistributor.queue.filter(
-			(a, index) => index !== 0
-		);
-
-		setTridentDistributors(distributorData);
+		setTridentDistributors({
+			...tridentDistibutors,
+			queue: tridentDistibutors.queue.filter((a, index) => index !== 0),
+		});
 
 		return toBeReturned;
 	};
 
-	const removeAttachersSoul = (workerId) => {
-		let attacherData = [...tailAttachers];
-		let currentAttacher = attacherData[workerId];
+	const removeAttachersSoul = () => {
+		const toBeReturned = tailAttachers.queue[0];
 
-		const toBeReturned = currentAttacher.queue[0];
+		setTailAttachers({
+			...tailAttachers,
+			queue: tailAttachers.queue.filter((a, index) => index !== 0),
+		});
 
-		currentAttacher.queue = currentAttacher.queue.filter(
-			(a, index) => index !== 0
-		);
-
-		setTailAttachers(attacherData);
 		return toBeReturned;
 	};
 
-	// For HornFitter
-	const findAttacherAndQueue = (soul) => {
-		let attacherData = [...tailAttachers];
-		let availableAttacher = attacherData.find(
-			(a) => a.queue.length < a.queueMax
-		);
-
-		if (!availableAttacher) {
-			console.log("All Attachers full.");
-			return;
+	const queueWithAttacher = (soul) => {
+		if (tailAttachers.queue.length < tailAttachers.queueMax) {
+			setTailAttachers({
+				...tailAttachers,
+				queue: [...tailAttachers.queue, soul],
+			});
+		} else {
 		}
-
-		availableAttacher.queue = [...availableAttacher.queue, soul];
-
-		setTailAttachers(attacherData);
 	};
 
 	return (
 		<>
-			<p>Queue to hell: {soulsDescending.length}</p>
-			<h1>Hell</h1>
-
-			{hornFitters.map((fitter, index) => (
+			<h1 className="title">Hell</h1>
+			<div className={styles.workerContainer}>
 				<HornFitter
-					key={index}
-					id={index}
-					timeToComplete={fitter.timeToComplete}
-					soul={soulsDescending[0]}
+					timeToComplete={hornFitters.timeToComplete}
+					souls={soulsDescending}
+					revenueGenerated={hornFitters.revenueGenerated}
+					workerCount={hornFitters.workers}
+					queueMax={soulsDescendingQueueMax}
 					handleComplete={handleComplete}
+					handleRevenue={handleRevenue}
 				/>
-			))}
-
-			{tailAttachers.map((attacher, index) => (
 				<TailAttacher
-					key={index}
-					id={index}
-					timeToComplete={attacher.timeToComplete}
-					soul={attacher.queue[0]}
+					timeToComplete={tailAttachers.timeToComplete}
+					souls={tailAttachers.queue}
+					revenueGenerated={tailAttachers.revenueGenerated}
+					workerCount={tailAttachers.workers}
+					queueMax={tailAttachers.queueMax}
 					handleComplete={handleComplete}
+					handleRevenue={handleRevenue}
 				/>
-			))}
-
-			{tridentDistibutors.map((distributor, index) => (
 				<TridentDistributor
-					key={index}
-					id={index}
-					timeToComplete={distributor.timeToComplete}
-					soul={distributor.queue[0]}
+					timeToComplete={tridentDistibutors.timeToComplete}
+					souls={tridentDistibutors.queue}
+					revenueGenerated={tridentDistibutors.revenueGenerated}
+					workerCount={tridentDistibutors.workers}
+					queueMax={tridentDistibutors.queueMax}
 					handleComplete={handleComplete}
+					handleRevenue={handleRevenue}
 				/>
-			))}
 
-			<TheDevil
-				timeToComplete={theDevil.timeToComplete}
-				soul={theDevil.queue[0]}
-				handleComplete={handleComplete}
-			/>
+				<TheDevil
+					timeToComplete={theDevil.timeToComplete}
+					souls={theDevil.queue}
+					handleComplete={handleComplete}
+					handleRevenue={handleRevenue}
+					revenueGenerated={theDevil.revenueGenerated}
+					queueMax={theDevil.queueMax}
+				/>
+			</div>
 		</>
 	);
 }

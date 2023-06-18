@@ -1,24 +1,46 @@
 import React, { useEffect } from "react";
 
 export default function TridentDistributor(params) {
-	const { id, soul, timeToComplete, handleComplete } = params;
+	const {
+		timeToComplete,
+		souls,
+		handleComplete,
+		revenueGenerated,
+		handleRevenue,
+		workerCount,
+		queueMax,
+	} = params;
+
+	let isProcessing = false;
 
 	function processSoul() {
-		handleComplete("TridentDistributor", id, soul);
+		isProcessing = true;
+		handleRevenue(revenueGenerated);
+		handleComplete("TridentDistributor", souls[0]);
+		isProcessing = false;
 	}
 
 	useEffect(() => {
-		if (!soul) {
+		if (souls.length === 0) {
 			return;
 		}
 
-		let ticker = setInterval(processSoul(), timeToComplete);
-		return () => clearInterval(ticker);
+		if (!isProcessing) {
+			let ticker = setInterval(() => processSoul(), timeToComplete);
+			return () => clearInterval(ticker);
+		}
 	});
 
 	return (
-		<>
-			<h1>Trident Distributor</h1>
-		</>
+		<div className="Worker">
+			<h3>Trident Distributor</h3>
+			<div className="worker-details">
+				<p>
+					Queue: {souls.length}/{queueMax}
+				</p>
+				<p>Worker Count: {workerCount}</p>
+				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>
+			</div>
+		</div>
 	);
 }
