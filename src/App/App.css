@@ -12,15 +12,31 @@
 }
 
 .purgatory {
-    background: lightskyblue
+    background-image: url("../../public/purgatory.png");
+    background-color: lightskyblue;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-size: cover;
+    transform: scale(1, 1);
 }
 
 .heaven {
-    background: lightgrey;
+    background-image: url("../../public/heaven.png");
+    background-color: lightgrey;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-size: cover;
 }
 
 .hell {
-    background: grey
+    background-image: url("../../public/hellTest2.png");
+    background-color: grey;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-size: cover;
 }
 
 .right-pane {
