@@ -79,18 +79,18 @@ export default function Content() {
 		}
 	};
 
-	const handleFinalProcess = (levelName) => {
-		switch (levelName) {
-			case "Hell":
-				setDemonCount(demonCount + 1);
-				break;
-			case "Heaven":
-				setAngelCount(angelCount + 1);
-				break;
-			default:
-				break;
-		}
-	};
+    const handleFinalProcess = (levelName) => {
+        switch (levelName) {
+            case "Hell":
+                setDemonCount((prev) => prev + 1);
+                break;
+            case "Heaven":
+                setAngelCount((prev) => prev + 1);
+                break;
+            default:
+                break;
+        }
+    };
 
 	const [hellItemBought, setHellItemBought] = useState({});
 	const [purgatoryItemBought, setPurgatoryItemBought] = useState({});

@@ -77,31 +77,43 @@ export default function Hell(params) {
 	};
 
 	const removeDevilsSoul = () => {
-		setTheDevil({
-			...theDevil,
-			queue: [theDevil.queue.filter((s, index) => index !== 0)],
+		setTheDevil((prev) => {
+			return {
+				...prev,
+				queue: [...prev.queue.filter((s, index) => index !== 0)],
+			};
 		});
 	};
 
 	const sendSoulToDevil = (soul) => {
-		setTheDevil({ ...theDevil, queue: [...theDevil.queue, soul] });
+		if (theDevil.queue.length < theDevil.queueMax) {
+			setTheDevil((prev) => {
+				return { ...prev, queue: [...prev.queue, soul] };
+			});
+		} else {
+		}
 	};
 
 	const queueWithDistributor = (soul) => {
 		if (tridentDistibutors.queue.length < tridentDistibutors.queueMax) {
-			setTridentDistributors({
-				...tridentDistibutors,
-				queue: [tridentDistibutors.queue, soul],
+			setTridentDistributors((prev) => {
+				return {
+					...prev,
+					queue: [...prev.queue, soul],
+				};
 			});
+		} else {
 		}
 	};
 
 	const removeDistributorsSoul = (workerId) => {
 		const toBeReturned = tridentDistibutors.queue[0];
 
-		setTridentDistributors({
-			...tridentDistibutors,
-			queue: tridentDistibutors.queue.filter((a, index) => index !== 0),
+		setTridentDistributors((prev) => {
+			return {
+				...prev,
+				queue: prev.queue.filter((a, index) => index !== 0),
+			};
 		});
 
 		return toBeReturned;
@@ -110,9 +122,11 @@ export default function Hell(params) {
 	const removeAttachersSoul = () => {
 		const toBeReturned = tailAttachers.queue[0];
 
-		setTailAttachers({
-			...tailAttachers,
-			queue: tailAttachers.queue.filter((a, index) => index !== 0),
+		setTailAttachers((prev) => {
+			return {
+				...prev,
+				queue: prev.queue.filter((a, index) => index !== 0),
+			};
 		});
 
 		return toBeReturned;
@@ -120,9 +134,11 @@ export default function Hell(params) {
 
 	const queueWithAttacher = (soul) => {
 		if (tailAttachers.queue.length < tailAttachers.queueMax) {
-			setTailAttachers({
-				...tailAttachers,
-				queue: [...tailAttachers.queue, soul],
+			setTailAttachers((prev) => {
+				return {
+					...prev,
+					queue: [...prev.queue, soul],
+				};
 			});
 		} else {
 		}

@@ -21,7 +21,7 @@ export default function Verifier(params) {
 	}
 
 	useEffect(() => {
-		if (Array.isArray(souls) || souls.length === 0) {
+		if (souls.length === 0) {
 			return;
 		}
 
@@ -37,7 +37,7 @@ export default function Verifier(params) {
 			<h3>Verifiers</h3>
 			<div className="worker-details">
 				<p>
-					Queue: {souls?.length}/{queueMax}
+					Queue: {souls.length}/{queueMax}
 				</p>
 				<p>Worker Count: {workerCount}</p>
 				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>

@@ -29,7 +29,7 @@ export default function TridentDistributor(params) {
 			let ticker = setInterval(() => processSoul(), timeToComplete);
 			return () => clearInterval(ticker);
 		}
-	});
+	}, [souls]);
 
 	return (
 		<div className="Worker">
