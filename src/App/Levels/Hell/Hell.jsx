@@ -93,6 +93,7 @@ export default function Hell(params) {
 				...tridentDistibutors,
 				queue: [tridentDistibutors.queue, soul],
 			});
+		} else {
 		}
 	};
 
