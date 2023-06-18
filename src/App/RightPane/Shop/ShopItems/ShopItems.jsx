@@ -2,7 +2,6 @@ import React from "react";
 
 export default function ShopItems(params) {
 	const {
-		id,
 		itemName,
 		itemEffect,
 		itemCost,
@@ -15,17 +14,22 @@ export default function ShopItems(params) {
 	function buyItem() {
 		let workerModifier = 0,
 			moneyModifier = 1,
-			productivityModifier = 1;
+			productivityModifier = 1,
+			queueModifier = 0;
 
 		switch (upgradeType) {
 			case "Worker":
 				workerModifier = 1;
+				productivityModifier = 0.5;
 				break;
 			case "Money":
 				moneyModifier = 1.25;
 				break;
 			case "Productivity":
 				productivityModifier = 0.75;
+				break;
+			case "Queue":
+				queueModifier = 5;
 				break;
 			default:
 				break;
@@ -39,6 +43,7 @@ export default function ShopItems(params) {
 				worker: workerModifier,
 				money: moneyModifier,
 				productivity: productivityModifier,
+				queue: queueModifier,
 			},
 		});
 	}

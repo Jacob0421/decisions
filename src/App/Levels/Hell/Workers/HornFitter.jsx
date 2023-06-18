@@ -1,24 +1,46 @@
 import React, { useEffect } from "react";
 
 export default function HornFitter(params) {
-	const { id, timeToComplete, soul, handleComplete } = params;
+	const {
+		timeToComplete,
+		souls,
+		handleComplete,
+		queueMax,
+		workerCount,
+		revenueGenerated,
+		handleRevenue,
+	} = params;
+
+	let isProcessing = false;
 
 	function processSoul() {
-		handleComplete("HornFitter", id, soul);
+		isProcessing = true;
+		handleRevenue(revenueGenerated);
+		handleComplete("HornFitter", souls[0]);
+		isProcessing = false;
 	}
 
 	useEffect(() => {
-		if (!soul) {
+		if (souls.length === 0) {
 			return;
 		}
 
-		let ticker = setInterval(() => processSoul(), timeToComplete);
-		return () => clearInterval(ticker);
-	}, [soul]);
+		if (!isProcessing) {
+			let ticker = setInterval(() => processSoul(), timeToComplete);
+			return () => clearInterval(ticker);
+		}
+	}, [souls]);
 
 	return (
-		<>
-			<h1>Horn Fitter</h1>
-		</>
+		<div className="Worker">
+			<h3>Horn Fitter</h3>
+			<div className="worker-details">
+				<p>
+					Queue: {souls.length}/{queueMax}
+				</p>
+				<p>Worker Count: {workerCount}</p>
+				<p>Rate: {(1000 / timeToComplete).toFixed(2)}/s</p>
+			</div>
+		</div>
 	);
 }

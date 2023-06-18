@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 
+import {
+	ReaperInitial,
+	VerifierInitial,
+	DeciderInitial,
+} from "../../../Data/DataIntialization/Purgatory";
+
 import Reaper from "./Workers/Reaper";
 import Verifier from "./Workers/Verifier";
 import Decider from "./Workers/Decider";
+
+import styles from "./Purgatory.module.css";
 
 export default function Purgatory(params) {
 	const {
@@ -21,91 +29,97 @@ export default function Purgatory(params) {
 	}, [itemBought]);
 
 	const applyItemBought = () => {
-		console.log(itemBought.buildingAffected);
 		switch (itemBought.buildingAffected) {
 			case "Reaper":
-				if (itemBought.upgradeModifiers.worker === 1) {
-					setReapers([
-						...reapers,
-						{
-							timeToComplete: 1000,
-							moneyGenerated: 100,
-						},
-					]);
-				} else {
-					let reaperData = [...reapers];
-
-					reaperData.forEach((r) => {
-						r.moneyGenerated *= itemBought.upgradeModifiers.money;
-						r.timeToComplete *=
-							itemBought.upgradeModifiers.productivity;
-					});
-					setReapers(reaperData);
-				}
-
-				// if (itemBought.upgradeType === "Worker") {
-				// 	setReapers([
-				// 		...reapers,
-				// 		{
-				// 			name: "Rubio",
-				// 			timeToComplete: 1000,
-				// 		},
-				// 	]);
-				// } else if (itemBought.upgradeType === "Money"){
-
-				// } else {
-
-				// }
-				handleBuyCompleted("Purgatory");
+				setReapers({
+					workers:
+						reapers.workers + itemBought.upgradeModifiers.worker,
+					timeToComplete: Math.ceil(
+						reapers.timeToComplete *
+							itemBought.upgradeModifiers.productivity
+					),
+					revenueGenerated: Math.ceil(
+						reapers.revenueGenerated *
+							itemBought.upgradeModifiers.money
+					),
+				});
+				break;
+			case "Verifier":
+				setVerifiers({
+					...verifiers,
+					workers: (verifiers.workers +=
+						itemBought.upgradeModifiers.worker),
+					timeToComplete: Math.ceil(
+						(verifiers.timeToComplete *=
+							itemBought.upgradeModifiers.productivity)
+					),
+					revenueGenerated: Math.ceil(
+						(verifiers.revenueGenerated *=
+							itemBought.upgradeModifiers.money)
+					),
+					queueMax: (verifiers.queueMax +=
+						itemBought.upgradeModifiers.queue),
+				});
+				break;
+			case "Decider":
+				setDeciders({
+					...deciders,
+					workers: (deciders.workers +=
+						itemBought.upgradeModifiers.worker),
+					timeToComplete: Math.ceil(
+						(deciders.timeToComplete *=
+							itemBought.upgradeModifiers.productivity)
+					),
+					revenueGenerated: Math.ceil(
+						(deciders.revenueGenerated *=
+							itemBought.upgradeModifiers.money)
+					),
+					queueMax: (deciders.queueMax +=
+						itemBought.upgradeModifiers.queue),
+				});
 				break;
 			default:
 				break;
 		}
+
+		handleBuyCompleted("Purgatory");
 	};
 
-	// ToDo: Move this value initialization to extrernal data file
-	const [reapers, setReapers] = useState([
-		{
-			timeToComplete: 1000,
-			moneyGenerated: 100,
-		},
-	]);
+	const [reapers, setReapers] = useState({
+		workers: ReaperInitial.workers,
+		timeToComplete: ReaperInitial.timeToComplete,
+		revenueGenerated: ReaperInitial.revenueGenerated,
+	});
 
-	// Todo: Move this value initialization to an external data file
-	const [verifiers, setVerifiers] = useState([
-		{
-			name: "Veronica",
-			timeToComplete: 2000,
-			queueMax: 5,
-			queue: [],
-		},
-	]);
+	const [verifiers, setVerifiers] = useState({
+		workers: VerifierInitial.workers,
+		timeToComplete: VerifierInitial.timeToComplete,
+		revenueGenerated: VerifierInitial.revenueGenerated,
+		queueMax: VerifierInitial.queueMax,
+		queue: [],
+	});
 
-	// Todo: Move this value initialization to an external data file
-	const [deciders, setDeciders] = useState([
-		{
-			name: "Daryl",
-			timeToComplete: 3000,
-			percentCorrect: 50,
-			queueMax: 5,
-			queue: [],
-		},
-	]);
+	const [deciders, setDeciders] = useState({
+		workers: DeciderInitial.workers,
+		timeToComplete: DeciderInitial.timeToComplete,
+		percentCorrect: DeciderInitial.percentCorrect,
+		revenueGenerated: DeciderInitial.revenueGenerated,
+		queueMax: DeciderInitial.queueMax,
+		queue: [],
+	});
 
-	const handleComplete = (workerType, id, soul) => {
+	const handleComplete = (workerType, soul) => {
 		switch (workerType) {
 			case "Reaper":
-				// findVerifierAndQueue Checks all verifiers for a queue that has a free space, then places soul. If there are none, soul is lost.
-				// Could possibly return true / false so that we can output different messages for each result.
-				findVerifierAndQueue(soul);
+				queueWithVerifier(soul);
 				break;
 
 			case "Verifier":
 				// Returns soul removed from the Verifiers queue
-				const toDeciders = removeSoul(id);
+				const toDeciders = removeVerifiersSoul();
 
 				// Takes the soul removed from pervious Verifier and finds a Decider queue to place it in
-				findDeciderAndQueue(toDeciders);
+				queueWithDeciders(toDeciders);
 				break;
 			default:
 				break;
@@ -113,69 +127,42 @@ export default function Purgatory(params) {
 	};
 
 	// for Verifier
-	const removeSoul = (id) => {
-		let verifierData = [...verifiers];
-		let currentVerifier = verifierData[id];
+	const removeVerifiersSoul = () => {
+		const toRemove = verifiers.queue[0];
 
-		const toRemove = currentVerifier.queue[0];
+		setVerifiers({
+			...verifiers,
+			queue: verifiers.queue.filter((s, index) => index !== 0),
+		});
 
-		currentVerifier.queue = currentVerifier.queue.filter(
-			(s, index) => index !== 0
-		);
-		setVerifiers(verifierData);
 		return toRemove;
 	};
 
 	// for Verifier
-	const findVerifierAndQueue = (soul) => {
-		let verifierData = [...verifiers];
-
-		let availableVerifier = verifierData.find(
-			(v) => v.queue.length < v.queueMax
-		);
-
-		if (!availableVerifier) {
-			return;
+	const queueWithVerifier = (soul) => {
+		if (verifiers.queue.length < verifiers.queueMax) {
+			setVerifiers({ ...verifiers, queue: [...verifiers.queue, soul] });
+		} else {
+			//message
 		}
-
-		availableVerifier.queue = [...availableVerifier.queue, soul];
-
-		setVerifiers(verifierData);
 	};
 
 	//for Decider
-	const findDeciderAndQueue = (soul) => {
-		let deciderData = [...deciders];
-
-		let availableDecider = deciderData.find(
-			(v) => v.queue.length < v.queueMax
-		);
-
-		if (!availableDecider) {
-			return;
+	const queueWithDeciders = (soul) => {
+		if (deciders.queue.length < deciders.queueMax) {
+			setDeciders({ ...deciders, queue: [...deciders.queue, soul] });
 		}
-
-		availableDecider.queue = [...availableDecider.queue, soul];
-
-		setDeciders(deciderData);
 	};
 
 	// for Decider
-	const handleDecision = (id, decision, soul) => {
-		// Here we need to do the same as above.
-		// empty the one from the queue,
-		let deciderData = deciders;
-
-		deciderData[id].queue = deciderData[id].queue.filter(
-			(d, index) => index !== 0
-		);
-
-		setDeciders(deciderData);
-
-		// (DONE) and move to next step.
+	const handleDecision = (decision, soul) => {
+		setDeciders({
+			...deciders,
+			queue: deciders.queue.filter((d, index) => index !== 0),
+		});
 
 		if (decision) {
-			//calback function from ../Conten/Content.jsx
+			//calback function from ../App/App.jsx
 			handleAscension(soul);
 		} else {
 			handleDescension(soul);
@@ -184,38 +171,35 @@ export default function Purgatory(params) {
 
 	return (
 		<>
-			<h1>Purgatory</h1>
-			{reapers.map((reaper, index) => (
+			<h1 className="title">Purgatory</h1>
+			<div className={styles.workerContainer}>
 				<Reaper
-					key={index}
-					id={index + 1}
-					timeToComplete={reaper.timeToComplete}
+					workerCount={reapers.workers}
+					timeToComplete={reapers.timeToComplete}
 					handleComplete={handleComplete}
-					revenueGenerated={reaper.moneyGenerated}
+					revenueGenerated={reapers.revenueGenerated}
 					handleRevenue={handleRevenue}
 				/>
-			))}
-			{/* <p>Verifiers Queue Length: {verifiersQueue.length}</p> */}
-			{verifiers.map((verifier, index) => (
 				<Verifier
-					key={index}
-					id={index}
-					timeToComplete={verifier.timeToComplete}
-					soul={verifier.queue[0]}
+					workerCount={verifiers.workers}
+					timeToComplete={verifiers.timeToComplete}
+					souls={verifiers.queue}
+					queueMax={verifiers.queueMax}
 					handleComplete={handleComplete}
+					revenueGenerated={verifiers.revenueGenerated}
+					handleRevenue={handleRevenue}
 				/>
-			))}
-
-			{deciders.map((decider, index) => (
 				<Decider
-					key={index}
-					id={index}
-					timeToComplete={decider.timeToComplete}
-					percentCorrect={decider.percentCorrect}
-					soul={decider.queue[0]}
+					timeToComplete={deciders.timeToComplete}
+					percentCorrect={deciders.percentCorrect}
+					souls={deciders.queue}
 					handleDecision={handleDecision}
+					revenueGenerated={deciders.revenueGenerated}
+					handleRevenue={handleRevenue}
+					workerCount={deciders.workers}
+					queueMax={deciders.queueMax}
 				/>
-			))}
+			</div>
 		</>
 	);
 }
