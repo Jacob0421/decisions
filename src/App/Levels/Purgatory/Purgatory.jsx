@@ -151,6 +151,7 @@ export default function Purgatory(params) {
 	const queueWithDeciders = (soul) => {
 		if (deciders.queue.length < deciders.queueMax) {
 			setDeciders({ ...deciders, queue: [...deciders.queue, soul] });
+		} else {
 		}
 	};
 
