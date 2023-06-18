@@ -25,7 +25,7 @@ export default function TheDevil(params) {
 		}
 
 		if (!isProcessing) {
-			let ticker = setInterval(processSoul(), timeToComplete);
+			let ticker = setInterval(() => processSoul(), timeToComplete);
 			return () => clearInterval(ticker);
 		}
 	}, [souls]);

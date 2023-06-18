@@ -31,51 +31,58 @@ export default function Purgatory(params) {
 	const applyItemBought = () => {
 		switch (itemBought.buildingAffected) {
 			case "Reaper":
-				setReapers({
-					workers:
-						reapers.workers + itemBought.upgradeModifiers.worker,
-					timeToComplete: Math.ceil(
-						reapers.timeToComplete *
-							itemBought.upgradeModifiers.productivity
-					),
-					revenueGenerated: Math.ceil(
-						reapers.revenueGenerated *
-							itemBought.upgradeModifiers.money
-					),
+				setReapers((prev) => {
+					return {
+						...prev,
+						workers:
+							prev.workers + itemBought.upgradeModifiers.worker,
+						timeToComplete: Math.ceil(
+							prev.timeToComplete *
+								itemBought.upgradeModifiers.productivity
+						),
+						revenueGenerated: Math.ceil(
+							prev.revenueGenerated *
+								itemBought.upgradeModifiers.money
+						),
+					};
 				});
 				break;
 			case "Verifier":
-				setVerifiers({
-					...verifiers,
-					workers: (verifiers.workers +=
-						itemBought.upgradeModifiers.worker),
-					timeToComplete: Math.ceil(
-						(verifiers.timeToComplete *=
-							itemBought.upgradeModifiers.productivity)
-					),
-					revenueGenerated: Math.ceil(
-						(verifiers.revenueGenerated *=
-							itemBought.upgradeModifiers.money)
-					),
-					queueMax: (verifiers.queueMax +=
-						itemBought.upgradeModifiers.queue),
+				setVerifiers((prev) => {
+					return {
+						...prev,
+						workers: (prev.workers +=
+							itemBought.upgradeModifiers.worker),
+						timeToComplete: Math.ceil(
+							(prev.timeToComplete *=
+								itemBought.upgradeModifiers.productivity)
+						),
+						revenueGenerated: Math.ceil(
+							(prev.revenueGenerated *=
+								itemBought.upgradeModifiers.money)
+						),
+						queueMax: (prev.queueMax +=
+							itemBought.upgradeModifiers.queue),
+					};
 				});
 				break;
 			case "Decider":
-				setDeciders({
-					...deciders,
-					workers: (deciders.workers +=
-						itemBought.upgradeModifiers.worker),
-					timeToComplete: Math.ceil(
-						(deciders.timeToComplete *=
-							itemBought.upgradeModifiers.productivity)
-					),
-					revenueGenerated: Math.ceil(
-						(deciders.revenueGenerated *=
-							itemBought.upgradeModifiers.money)
-					),
-					queueMax: (deciders.queueMax +=
-						itemBought.upgradeModifiers.queue),
+				setDeciders((prev) => {
+					return {
+						...prev,
+						workers: (prev.workers +=
+							itemBought.upgradeModifiers.worker),
+						timeToComplete: Math.ceil(
+							(prev.timeToComplete *=
+								itemBought.upgradeModifiers.productivity)
+						),
+						revenueGenerated: Math.ceil(
+							(prev.revenueGenerated *=
+								itemBought.upgradeModifiers.money)
+						),
+						queueMax: (prev.queueMax +=
+							itemBought.upgradeModifiers.queue),
+					};
 				});
 				break;
 			default:
@@ -130,9 +137,11 @@ export default function Purgatory(params) {
 	const removeVerifiersSoul = () => {
 		const toRemove = verifiers.queue[0];
 
-		setVerifiers({
-			...verifiers,
-			queue: verifiers.queue.filter((s, index) => index !== 0),
+		setVerifiers((prev) => {
+			return {
+				...prev,
+				queue: prev.queue.filter((s, index) => index !== 0),
+			};
 		});
 
 		return toRemove;
@@ -141,7 +150,9 @@ export default function Purgatory(params) {
 	// for Verifier
 	const queueWithVerifier = (soul) => {
 		if (verifiers.queue.length < verifiers.queueMax) {
-			setVerifiers({ ...verifiers, queue: [...verifiers.queue, soul] });
+			setVerifiers((prev) => {
+				return { ...prev, queue: [...prev.queue, soul] };
+			});
 		} else {
 			//message
 		}
@@ -150,16 +161,20 @@ export default function Purgatory(params) {
 	//for Decider
 	const queueWithDeciders = (soul) => {
 		if (deciders.queue.length < deciders.queueMax) {
-			setDeciders({ ...deciders, queue: [...deciders.queue, soul] });
+			setDeciders((prev) => {
+				return { ...prev, queue: [...prev.queue, soul] };
+			});
 		} else {
 		}
 	};
 
 	// for Decider
 	const handleDecision = (decision, soul) => {
-		setDeciders({
-			...deciders,
-			queue: deciders.queue.filter((d, index) => index !== 0),
+		setDeciders((prev) => {
+			return {
+				...prev,
+				queue: prev.queue.filter((d, index) => index !== 0),
+			};
 		});
 
 		if (decision) {

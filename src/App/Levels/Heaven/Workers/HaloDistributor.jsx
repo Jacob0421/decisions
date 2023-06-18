@@ -16,7 +16,7 @@ export default function HaloDistributor(params) {
 	function processSoul() {
 		isProcessing = true;
 		handleRevenue(revenueGenerated);
-		handleComplete("HaloDistributor", souls);
+		handleComplete("HaloDistributor", souls[0]);
 		isProcessing = false;
 	}
 
