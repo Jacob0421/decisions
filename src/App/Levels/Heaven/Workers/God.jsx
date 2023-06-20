@@ -28,7 +28,7 @@ export default function God(params) {
 
 			return () => clearInterval(ticker);
 		}
-	}, [souls]);
+	}, souls);
 
 	return (
 		<div className="Worker">

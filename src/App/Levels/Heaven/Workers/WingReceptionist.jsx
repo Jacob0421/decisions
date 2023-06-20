@@ -29,7 +29,7 @@ export default function WingReceptionist(params) {
 			let ticker = setInterval(() => processSoul(), timeToComplete);
 			return () => clearInterval(ticker);
 		}
-	}, [souls]);
+	}, souls);
 
 	return (
 		<div className="Worker">

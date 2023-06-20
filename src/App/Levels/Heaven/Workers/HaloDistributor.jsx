@@ -16,7 +16,7 @@ export default function HaloDistributor(params) {
 	function processSoul() {
 		isProcessing = true;
 		handleRevenue(revenueGenerated);
-		handleComplete("HaloDistributor", souls);
+		handleComplete("HaloDistributor", souls[0]);
 		isProcessing = false;
 	}
 
@@ -29,7 +29,7 @@ export default function HaloDistributor(params) {
 			let ticker = setInterval(() => processSoul(), timeToComplete);
 			return () => clearInterval(ticker);
 		}
-	}, [souls]);
+	}, souls);
 
 	return (
 		<div className="Worker">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
 	WelcomerInitial,
@@ -22,7 +22,8 @@ export default function Heaven(params) {
 		handleFinalProcess,
 		handleRevenue,
 	} = params;
-
+	
+	// eslint-disable-next-line
 	const [welcomers, setWelcomers] = useState({
 		workers: WelcomerInitial.workers,
 		timeToComplete: WelcomerInitial.timeToComplete,
@@ -76,25 +77,30 @@ export default function Heaven(params) {
 	};
 
 	const removeGodsSoul = () => {
-		let godData = god;
-
-		godData.queue = godData.queue.filter((a, index) => index !== 0);
-
-		setGod(godData);
+		setGod((prev) => {
+			return {
+				...prev,
+				queue: [...prev.queue.filter((a, index) => index !== 0)],
+			};
+		});
 	};
 
 	const sendSoulToGod = (soul) => {
 		if (god.queue.length < god.queueMax) {
-			setGod({ ...god, queue: [...god.queue, soul] });
+			setGod((prev) => {
+				return { ...prev, queue: [...prev.queue, soul] };
+			});
 		} else {
 		}
 	};
 
 	const queueWithDistributors = (soul) => {
 		if (haloDistibutors.queue.length < haloDistibutors.queueMax) {
-			setHaloDistributors({
-				...haloDistibutors,
-				queue: [...haloDistibutors.queue, soul],
+			setHaloDistributors((prev) => {
+				return {
+					...prev,
+					queue: [...prev.queue, soul],
+				};
 			});
 		} else {
 		}
@@ -103,9 +109,11 @@ export default function Heaven(params) {
 	const removeDistributorsSoul = () => {
 		const toBeReturned = haloDistibutors.queue[0];
 
-		setHaloDistributors({
-			...haloDistibutors,
-			queue: haloDistibutors.queue.filter((a, index) => index !== 0),
+		setHaloDistributors((prev) => {
+			return {
+				...prev,
+				queue: [...prev.queue.filter((a, index) => index !== 0)],
+			};
 		});
 
 		return toBeReturned;
@@ -114,9 +122,11 @@ export default function Heaven(params) {
 	const removeReceptionistsSoul = () => {
 		const toBeReturned = wingReceptionists.queue[0];
 
-		setWingReceptionists({
-			...wingReceptionists,
-			queue: wingReceptionists.queue.filter((a, index) => index !== 0),
+		setWingReceptionists((prev) => {
+			return {
+				...prev,
+				queue: [...prev.queue.filter((a, index) => index !== 0)],
+			};
 		});
 
 		return toBeReturned;
@@ -125,9 +135,11 @@ export default function Heaven(params) {
 	// For HornFitter
 	const queueWithReceptionists = (soul) => {
 		if (wingReceptionists.queue.length < wingReceptionists.queueMax) {
-			setWingReceptionists({
-				...wingReceptionists,
-				queue: [...wingReceptionists.queue, soul],
+			setWingReceptionists((prev) => {
+				return {
+					...prev,
+					queue: [...prev.queue, soul],
+				};
 			});
 		} else {
 		}

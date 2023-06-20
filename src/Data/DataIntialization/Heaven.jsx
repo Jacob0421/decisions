@@ -13,13 +13,13 @@ export const WingReceptionistInitial = {
 
 export const HaloDistributorInitial = {
 	workers: 1,
-	revenueGenerated: 1000,
 	timeToComplete: 6000,
+	revenueGenerated: 1000,
 	queueMax: 5,
 };
 
 export const GodInitial = {
-	revenueGenerated: 5000,
 	timeToComplete: 7000,
-	queueMax: 5, 
+	revenueGenerated: 5000,
+	queueMax: 5,
 };

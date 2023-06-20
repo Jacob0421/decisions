@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Purgatory from "./Levels/Purgatory/Purgatory";
 import Heaven from "./Levels/Heaven/Heaven";
 import Hell from "./Levels/Hell/Hell";
 import RightPane from "./RightPane/RightPane";
-import Explosion from "./Explosion";
+// import Explosion from "./Explosion";
 import "./App.css";
 
 export default function Content() {
@@ -82,10 +82,10 @@ export default function Content() {
 	const handleFinalProcess = (levelName) => {
 		switch (levelName) {
 			case "Hell":
-				setDemonCount(demonCount + 1);
+				setDemonCount((prev) => prev + 1);
 				break;
 			case "Heaven":
-				setAngelCount(angelCount + 1);
+				setAngelCount((prev) => prev + 1);
 				break;
 			default:
 				break;
@@ -105,7 +105,7 @@ export default function Content() {
 			upgradeObject.buildingAffected === "God" &&
 			upgradeObject.upgradeModifiers.worker === 1
 		) {
-			setTimeTaken((prev) => prev - Date.now);
+			setTimeTaken((prev) => Date.now() - prev);
 			setIsEnd(true);
 
 			console.log(`Time Taken: ${timeTaken} isEnd: ${isEnd}`);
@@ -121,12 +121,12 @@ export default function Content() {
 			default:
 				break;
 		}
-	}; 
+	};
 
 	const handleBuyCompleted = (levelName) => {
 		switch (levelName) {
 			case "Purgatory":
-				setPurgatoryItemBought({});
+				setPurgatoryItemBought((prev) => {});
 				break;
 			default:
 				break;

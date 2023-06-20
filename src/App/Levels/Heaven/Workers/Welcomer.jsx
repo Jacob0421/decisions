@@ -24,7 +24,7 @@ export default function Welcomer(params) {
 
 		let ticker = setInterval(() => processSoul(), timeToComplete);
 		return () => clearInterval(ticker);
-	}, [souls]);
+	}, souls);
 
 	return (
 		<div className="Worker">
