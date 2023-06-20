@@ -91,6 +91,8 @@ export default function Hell(params) {
 			setTheDevil((prev) => {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
+		} else {
+			
 		}
 	};
 
@@ -102,6 +104,7 @@ export default function Hell(params) {
 					queue: [...prev.queue, soul],
 				};
 			});
+		} else {
 		}
 	};
 
