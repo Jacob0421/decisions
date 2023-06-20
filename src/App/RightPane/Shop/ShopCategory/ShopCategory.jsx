@@ -10,17 +10,21 @@ export default function ShopCategory(params) {
 			<div className="shop-divider"></div>
 			<div className="item-section">
 				<h1 onClick={() => setIsVisible(!isVisible)}>{levelName}</h1>
-				{buildings.map(
-					(building, index) =>
-						isVisible && (
-							<ShopBuilding
-								key={index}
-								buildingName={building.BuildingName}
-								buildingUpgrades={building.Upgrades}
-								handleBuy={handleBuy}
-							/>
-						)
-				)}
+
+				<div className="building-container">
+					{buildings.map(
+						(building, index) =>
+							isVisible && (
+								<ShopBuilding
+									key={index}
+									buildingName={building.BuildingName}
+									buildingBackground={building.img}
+									buildingUpgrades={building.Upgrades}
+									handleBuy={handleBuy}
+								/>
+							)
+					)}
+				</div>
 			</div>
 		</>
 	);

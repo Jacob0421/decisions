@@ -126,7 +126,7 @@ export default function Content() {
 	const handleBuyCompleted = (levelName) => {
 		switch (levelName) {
 			case "Purgatory":
-				setPurgatoryItemBought((prev) => {});
+				setPurgatoryItemBought({});
 				break;
 			default:
 				break;

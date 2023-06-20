@@ -29,7 +29,8 @@ export default function WingReceptionist(params) {
 			let ticker = setInterval(() => processSoul(), timeToComplete);
 			return () => clearInterval(ticker);
 		}
-	}, souls);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [souls]);
 
 	return (
 		<div className="Worker">

@@ -29,3 +29,17 @@
     flex-direction: column;
     gap: 2vh
 }
+
+.building-container {
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+
+.upgrade-details {
+    width: 100%;
+    border-top: 2px solid lightgrey;
+    border-bottom: 2px solid lightgrey;
+}

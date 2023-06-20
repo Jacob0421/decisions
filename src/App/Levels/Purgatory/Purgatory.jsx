@@ -26,6 +26,7 @@ export default function Purgatory(params) {
 			return;
 		}
 		applyItemBought();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [itemBought]);
 
 	const applyItemBought = () => {

@@ -19,7 +19,7 @@ export default function Hell(params) {
 		soulsDescending,
 		handleProcessedSoulFromQueue,
 		handleFinalProcess,
-		itemBought,
+		// itemBought,
 		soulsDescendingQueueMax,
 		handleRevenue,
 	} = params;
@@ -92,7 +92,6 @@ export default function Hell(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
-			
 		}
 	};
 

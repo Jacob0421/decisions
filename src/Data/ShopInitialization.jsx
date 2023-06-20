@@ -1,10 +1,31 @@
 export const Levels = [
 	{
+		LevelName: "Heaven",
+		Buildings: [
+			{
+				BuildingName: "Welcomer",
+				img: "/Welcomer",
+			},
+			{
+				BuildingName: "Wing Receptionist",
+				img: "/Wingreceptionist",
+			},
+			{
+				BuildingName: "Halo Distributor",
+				img: "/HaloDistributor",
+			},
+			{
+				BuildingName: "God",
+				img: "/God",
+			},
+		],
+	},
+	{
 		LevelName: "Purgatory",
 		Buildings: [
 			{
 				BuildingName: "Reaper",
-				img: "/Reaper",
+				img: "/img/ShopBackgrounds/Reapers.png",
 				Upgrades: [
 					{
 						name: "Additional Reapers",
@@ -37,7 +58,7 @@ export const Levels = [
 			},
 			{
 				BuildingName: "Verifier",
-				img: "/Verifier",
+				img: "/img/ShopBackgrounds/Verifiers.png",
 				Upgrades: [
 					{
 						name: "Additional Verifiers",
@@ -79,7 +100,7 @@ export const Levels = [
 			},
 			{
 				BuildingName: "Decider",
-				img: "/Decider",
+				img: "/img/ShopBackgrounds/Deciders.png",
 				Upgrades: [
 					{
 						name: "Additional Deciders",
@@ -139,27 +160,6 @@ export const Levels = [
 			{
 				BuildingName: "The Devil",
 				img: "/TheDevil",
-			},
-		],
-	},
-	{
-		LevelName: "Heaven",
-		Buildings: [
-			{
-				BuildingName: "Welcomer",
-				img: "/Welcomer",
-			},
-			{
-				BuildingName: "Wing Receptionist",
-				img: "/Wingreceptionist",
-			},
-			{
-				BuildingName: "Halo Distributor",
-				img: "/HaloDistributor",
-			},
-			{
-				BuildingName: "God",
-				img: "/God",
 			},
 		],
 	},
