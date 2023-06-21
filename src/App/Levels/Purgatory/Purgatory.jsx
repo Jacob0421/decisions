@@ -157,7 +157,17 @@ export default function Purgatory(params) {
 			});
 		} else {
 			//message
-			handleNewMessage({ type: "Bad", text: "Verifier Queue Overload" });
+
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "Verifier Queue Overload",
+				time: date,
+			});
 		}
 	};
 
@@ -168,7 +178,16 @@ export default function Purgatory(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
-			handleNewMessage({ type: "Bad", text: "Decider Queue Overload" });
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "Decider Queue Overload",
+				time: date,
+			});
 		}
 	};
 

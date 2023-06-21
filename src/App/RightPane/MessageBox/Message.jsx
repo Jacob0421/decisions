@@ -10,23 +10,23 @@ export default function Message(params) {
 					margin: "3px",
 					textAlign: "left",
 					width: "100%",
-					backgroundColor: "red",
+					backgroundColor: "rgba(255, 0, 0, 0.4)",
 					padding: "0 1vw",
 				}}>
-				{message.text}
+				{message.time + ": " + message.text}
 			</p>
 		);
 	} else {
 		return (
 			<p
 				style={{
-					margin: "3px",
+					margin: "4px",
 					textAlign: "left",
 					width: "100%",
-					backgroundColor: "green",
+					backgroundColor: "rgba(60, 179, 113, 0.5)",
 					padding: "0 1vw",
 				}}>
-				{message.text}
+				{message.time + ": " + message.text}
 			</p>
 		);
 	}

@@ -102,13 +102,32 @@ export default function Content() {
 	};
 
 	const handleFinalProcess = (levelName) => {
+		let date;
 		switch (levelName) {
 			case "Hell":
-				handleNewMessage({ type: "Good", text: "Demon Generated" });
+				date = `${new Date().toLocaleString(undefined, {
+					hour: "2-digit",
+					minute: "2-digit",
+					second: "2-digit",
+				})}`;
+				handleNewMessage({
+					type: "Good",
+					text: "Demon Generated",
+					time: date,
+				});
 				setDemonCount((prev) => prev + 1);
 				break;
 			case "Heaven":
-				handleNewMessage({ type: "Good", text: "Angel Generated" });
+				date = `${new Date().toLocaleString(undefined, {
+					hour: "2-digit",
+					minute: "2-digit",
+					second: "2-digit",
+				})}`;
+				handleNewMessage({
+					type: "Good",
+					text: "Angel Generated",
+					time: date,
+				});
 				setAngelCount((prev) => prev + 1);
 				break;
 			default:

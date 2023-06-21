@@ -93,9 +93,15 @@ export default function Hell(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
 			handleNewMessage({
 				type: "Bad",
 				text: "Devil Queue Overload",
+				time: date,
 			});
 		}
 	};
@@ -109,9 +115,15 @@ export default function Hell(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
 			handleNewMessage({
 				type: "Bad",
 				text: "Trident Distributor Queue Overload",
+				time: date,
 			});
 		}
 	};
@@ -151,9 +163,15 @@ export default function Hell(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
 			handleNewMessage({
 				type: "Bad",
 				text: "Tail Attacher Queue Overload",
+				time: date,
 			});
 		}
 	};

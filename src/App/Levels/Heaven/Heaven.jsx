@@ -92,7 +92,16 @@ export default function Heaven(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
-			handleNewMessage({ type: "Bad", text: "God Queue Overload" });
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "God Queue Overload",
+				time: date,
+			});
 		}
 	};
 
@@ -105,9 +114,15 @@ export default function Heaven(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
 			handleNewMessage({
 				type: "Bad",
 				text: "Halo Distributor Queue Overload",
+				time: date,
 			});
 		}
 	};
@@ -148,9 +163,15 @@ export default function Heaven(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
 			handleNewMessage({
 				type: "Bad",
 				text: "Wing receptionists Queue Overload",
+				time: date,
 			});
 		}
 	};
