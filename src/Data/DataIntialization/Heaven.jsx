@@ -1,12 +1,12 @@
 export const WelcomerInitial = {
 	workers: 1,
-	timeToComplete: 4,
+	timeToComplete: 4000,
 	revenueGenerated: 500,
 };
 
 export const WingReceptionistInitial = {
 	workers: 1,
-	timeToComplete: 5,
+	timeToComplete: 5000,
 	revenueGenerated: 750,
 	queueMax: 5,
 };

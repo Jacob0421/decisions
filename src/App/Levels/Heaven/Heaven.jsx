@@ -21,8 +21,9 @@ export default function Heaven(params) {
 		handleProcessedSoulFromQueue,
 		handleFinalProcess,
 		handleRevenue,
+		handleNewMessage,
 	} = params;
-	
+
 	// eslint-disable-next-line
 	const [welcomers, setWelcomers] = useState({
 		workers: WelcomerInitial.workers,
@@ -91,6 +92,7 @@ export default function Heaven(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
+			handleNewMessage({ type: "Bad", text: "God Queue Overload" });
 		}
 	};
 
@@ -103,6 +105,10 @@ export default function Heaven(params) {
 				};
 			});
 		} else {
+			handleNewMessage({
+				type: "Bad",
+				text: "Halo Distributor Queue Overload",
+			});
 		}
 	};
 
@@ -142,6 +148,10 @@ export default function Heaven(params) {
 				};
 			});
 		} else {
+			handleNewMessage({
+				type: "Bad",
+				text: "Wing receptionists Queue Overload",
+			});
 		}
 	};
 

@@ -22,6 +22,7 @@ export default function Hell(params) {
 		// itemBought,
 		soulsDescendingQueueMax,
 		handleRevenue,
+		handleNewMessage,
 	} = params;
 
 	// eslint-disable-next-line
@@ -92,6 +93,10 @@ export default function Hell(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
+			handleNewMessage({
+				type: "Bad",
+				text: "Devil Queue Overload",
+			});
 		}
 	};
 
@@ -104,6 +109,10 @@ export default function Hell(params) {
 				};
 			});
 		} else {
+			handleNewMessage({
+				type: "Bad",
+				text: "Trident Distributor Queue Overload",
+			});
 		}
 	};
 
@@ -142,6 +151,10 @@ export default function Hell(params) {
 				};
 			});
 		} else {
+			handleNewMessage({
+				type: "Bad",
+				text: "Tail Attacher Queue Overload",
+			});
 		}
 	};
 

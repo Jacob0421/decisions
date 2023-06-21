@@ -19,6 +19,7 @@ export default function Purgatory(params) {
 		itemBought,
 		handleBuyCompleted,
 		handleRevenue,
+		handleNewMessage,
 	} = params;
 
 	useEffect(() => {
@@ -156,6 +157,7 @@ export default function Purgatory(params) {
 			});
 		} else {
 			//message
+			handleNewMessage({ type: "Bad", text: "Verifier Queue Overload" });
 		}
 	};
 
@@ -166,6 +168,7 @@ export default function Purgatory(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
+			handleNewMessage({ type: "Bad", text: "Decider Queue Overload" });
 		}
 	};
 
