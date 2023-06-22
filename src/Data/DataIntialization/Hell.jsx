@@ -1,12 +1,12 @@
 export const HornFitterInitial = {
 	workers: 1,
-	timeToComplete: 4,
+	timeToComplete: 4000,
 	revenueGenerated: 500,
 };
 
 export const TailAttacherInitial = {
 	workers: 1,
-	timeToComplete: 5,
+	timeToComplete: 5000,
 	revenueGenerated: 750,
 	queueMax: 5,
 };

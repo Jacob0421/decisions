@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Purgatory from "./Levels/Purgatory/Purgatory";
 import Heaven from "./Levels/Heaven/Heaven";
 import Hell from "./Levels/Hell/Hell";
 import RightPane from "./RightPane/RightPane";
-import Explosion from "./Explosion";
+// import Explosion from "./Explosion";
 import "./App.css";
 
 export default function Content() {
@@ -21,6 +21,28 @@ export default function Content() {
 		queueMax: 10,
 		queue: [],
 	});
+
+	const [hellItemBought, setHellItemBought] = useState({});
+	const [purgatoryItemBought, setPurgatoryItemBought] = useState({});
+
+	const [money, setMoney] = useState(1000);
+
+	const [messages, setMessages] = useState([]);
+
+	const handleNewMessage = (messageObject) => {
+		if (messages.length <= 100) {
+			setMessages((prev) => [...prev, messageObject]);
+		} else {
+			setMessages((prev) => [
+				...prev.filter((m, index) => index !== 0),
+				messageObject,
+			]);
+		}
+	};
+
+	const handleRevenue = (revenue) => {
+		setMoney((prev) => prev + revenue);
+	};
 
 	const handleAscension = (soul) => {
 		let ascensionData = soulsAscending;
@@ -79,21 +101,39 @@ export default function Content() {
 		}
 	};
 
-    const handleFinalProcess = (levelName) => {
-        switch (levelName) {
-            case "Hell":
-                setDemonCount((prev) => prev + 1);
-                break;
-            case "Heaven":
-                setAngelCount((prev) => prev + 1);
-                break;
-            default:
-                break;
-        }
-    };
-
-	const [hellItemBought, setHellItemBought] = useState({});
-	const [purgatoryItemBought, setPurgatoryItemBought] = useState({});
+	const handleFinalProcess = (levelName) => {
+		let date;
+		switch (levelName) {
+			case "Hell":
+				date = `${new Date().toLocaleString(undefined, {
+					hour: "2-digit",
+					minute: "2-digit",
+					second: "2-digit",
+				})}`;
+				handleNewMessage({
+					type: "Good",
+					text: "Demon Generated",
+					time: date,
+				});
+				setDemonCount((prev) => prev + 1);
+				break;
+			case "Heaven":
+				date = `${new Date().toLocaleString(undefined, {
+					hour: "2-digit",
+					minute: "2-digit",
+					second: "2-digit",
+				})}`;
+				handleNewMessage({
+					type: "Good",
+					text: "Angel Generated",
+					time: date,
+				});
+				setAngelCount((prev) => prev + 1);
+				break;
+			default:
+				break;
+		}
+	};
 
 	const handleBuy = (upgradeObject) => {
 		if (upgradeObject.itemCost > money) {
@@ -105,7 +145,7 @@ export default function Content() {
 			upgradeObject.buildingAffected === "God" &&
 			upgradeObject.upgradeModifiers.worker === 1
 		) {
-			setTimeTaken((prev) => prev - Date.now);
+			setTimeTaken((prev) => Date.now() - prev);
 			setIsEnd(true);
 
 			console.log(`Time Taken: ${timeTaken} isEnd: ${isEnd}`);
@@ -121,7 +161,7 @@ export default function Content() {
 			default:
 				break;
 		}
-	}; 
+	};
 
 	const handleBuyCompleted = (levelName) => {
 		switch (levelName) {
@@ -133,12 +173,6 @@ export default function Content() {
 		}
 	};
 
-	const [money, setMoney] = useState(1000);
-
-	const handleRevenue = (revenue) => {
-		setMoney((prev) => prev + revenue);
-	};
-
 	return (
 		<>
 			{/* {isEnd ? <Explosion /> : ""} */}
@@ -146,6 +180,7 @@ export default function Content() {
 				angelCount={angelCount}
 				demonCount={demonCount}
 				money={money}
+				messages={messages}
 				handleBuy={handleBuy}
 			/>
 			<div className="level-container">
@@ -158,6 +193,7 @@ export default function Content() {
 						}
 						handleFinalProcess={handleFinalProcess}
 						handleRevenue={handleRevenue}
+						handleNewMessage={handleNewMessage}
 					/>
 				</div>
 
@@ -168,6 +204,7 @@ export default function Content() {
 						itemBought={purgatoryItemBought}
 						handleBuyCompleted={handleBuyCompleted}
 						handleRevenue={handleRevenue}
+						handleNewMessage={handleNewMessage}
 					/>
 				</div>
 				<div className="hell">
@@ -180,6 +217,7 @@ export default function Content() {
 						itemBought={hellItemBought}
 						soulsDescendingQueueMax={soulsDescending.queueMax}
 						handleRevenue={handleRevenue}
+						handleNewMessage={handleNewMessage}
 					/>
 				</div>
 			</div>
