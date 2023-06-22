@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { SoulData } from "../../../../Data/Soul";
 
 export default function Reaper(params) {
