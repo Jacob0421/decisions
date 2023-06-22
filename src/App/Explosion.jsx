@@ -11,7 +11,7 @@ export default function Explosion() {
 					zIndex: 9999,
 					position: "absolute",
 				}}
-				alt=""
+				alt="explosion"
 			/>
 		</>
 	);
