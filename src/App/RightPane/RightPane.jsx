@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Stats from "./Stats/Stats";
 import Shop from "./Shop/Shop";
+import MessageBox from "./MessageBox/MessageBox";
 
 export default function RightPane(params) {
-	const { angelCount, demonCount, money, handleBuy } = params;
+	const { angelCount, demonCount, money, messages, handleBuy } = params;
 
 	const [isShopVisible, setIsShopVisible] = useState(true);
 	const [isStatsVisible, setIsStatsVisible] = useState(false);
@@ -18,6 +18,8 @@ export default function RightPane(params) {
 				setIsShopVisible(false);
 				setIsStatsVisible(true);
 				break;
+			default:
+				break;
 		}
 	};
 
@@ -30,7 +32,7 @@ export default function RightPane(params) {
 							Shop
 						</button>
 						<button onClick={() => handleMenuClick("Stats")}>
-							Stats
+							Messages
 						</button>
 					</div>
 					<div className="current-stats">
@@ -41,7 +43,7 @@ export default function RightPane(params) {
 				</div>
 				<div className="right-content">
 					{isShopVisible && <Shop handleBuy={handleBuy} />}
-					{isStatsVisible && <Stats />}
+					{isStatsVisible && <MessageBox messages={messages} />}
 				</div>
 			</div>
 		</>

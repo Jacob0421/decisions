@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 export default function Welcomer(params) {
 	const {
-		id,
 		timeToComplete,
 		souls,
 		handleComplete,
@@ -24,6 +23,7 @@ export default function Welcomer(params) {
 
 		let ticker = setInterval(() => processSoul(), timeToComplete);
 		return () => clearInterval(ticker);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [souls]);
 
 	return (

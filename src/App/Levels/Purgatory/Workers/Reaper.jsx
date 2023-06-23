@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { SoulData } from "../../../../Data/Soul";
 
 export default function Reaper(params) {
@@ -37,6 +37,7 @@ export default function Reaper(params) {
 		const ticker = setInterval(() => GenerateSoul(), timeToComplete);
 
 		return () => clearInterval(ticker);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	});
 
 	return (

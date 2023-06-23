@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
 	WelcomerInitial,
@@ -21,8 +21,10 @@ export default function Heaven(params) {
 		handleProcessedSoulFromQueue,
 		handleFinalProcess,
 		handleRevenue,
+		handleNewMessage,
 	} = params;
 
+	// eslint-disable-next-line
 	const [welcomers, setWelcomers] = useState({
 		workers: WelcomerInitial.workers,
 		timeToComplete: WelcomerInitial.timeToComplete,
@@ -90,6 +92,16 @@ export default function Heaven(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "God Queue Overload",
+				time: date,
+			});
 		}
 	};
 
@@ -102,6 +114,16 @@ export default function Heaven(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "Halo Distributor Queue Overload",
+				time: date,
+			});
 		}
 	};
 
@@ -111,7 +133,7 @@ export default function Heaven(params) {
 		setHaloDistributors((prev) => {
 			return {
 				...prev,
-				queue: prev.queue.filter((a, index) => index !== 0),
+				queue: [...prev.queue.filter((a, index) => index !== 0)],
 			};
 		});
 
@@ -124,7 +146,7 @@ export default function Heaven(params) {
 		setWingReceptionists((prev) => {
 			return {
 				...prev,
-				queue: prev.queue.filter((a, index) => index !== 0),
+				queue: [...prev.queue.filter((a, index) => index !== 0)],
 			};
 		});
 
@@ -141,6 +163,16 @@ export default function Heaven(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "Wing receptionists Queue Overload",
+				time: date,
+			});
 		}
 	};
 

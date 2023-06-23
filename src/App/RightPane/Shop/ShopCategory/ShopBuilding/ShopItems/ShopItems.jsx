@@ -35,6 +35,21 @@ export default function ShopItems(params) {
 				break;
 		}
 
+		console.log(
+			[
+				itemName,
+				itemEffect,
+				itemCost,
+				levelAffected,
+				buildingAffected,
+				upgradeType,
+				workerModifier,
+				moneyModifier,
+				productivityModifier,
+				queueModifier,
+			].join(" ")
+		);
+
 		handleBuy({
 			itemCost: itemCost,
 			levelAffected: levelAffected,
@@ -49,10 +64,12 @@ export default function ShopItems(params) {
 	}
 
 	return (
-		<button onClick={() => buyItem()}>
-			<p>{itemName}</p>
-			<strong>Effect:</strong>
-			<p>{itemEffect}</p>
+		<button className="upgrade-details" onClick={() => buyItem()}>
+			<h2>{itemName}</h2>
+			<p>
+				<strong>Effect:</strong>
+				{itemEffect}
+			</p>
 			<p>Cost: {itemCost}</p>
 		</button>
 	);

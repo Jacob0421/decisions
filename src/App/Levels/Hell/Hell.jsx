@@ -19,11 +19,13 @@ export default function Hell(params) {
 		soulsDescending,
 		handleProcessedSoulFromQueue,
 		handleFinalProcess,
-		itemBought,
+		// itemBought,
 		soulsDescendingQueueMax,
 		handleRevenue,
+		handleNewMessage,
 	} = params;
 
+	// eslint-disable-next-line
 	const [hornFitters, setHornFitters] = useState({
 		workers: HornFitterInitial.workers,
 		timeToComplete: HornFitterInitial.timeToComplete,
@@ -91,6 +93,16 @@ export default function Hell(params) {
 				return { ...prev, queue: [...prev.queue, soul] };
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "Devil Queue Overload",
+				time: date,
+			});
 		}
 	};
 
@@ -103,6 +115,16 @@ export default function Hell(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "Trident Distributor Queue Overload",
+				time: date,
+			});
 		}
 	};
 
@@ -112,7 +134,7 @@ export default function Hell(params) {
 		setTridentDistributors((prev) => {
 			return {
 				...prev,
-				queue: prev.queue.filter((a, index) => index !== 0),
+				queue: [...prev.queue.filter((a, index) => index !== 0)],
 			};
 		});
 
@@ -125,7 +147,7 @@ export default function Hell(params) {
 		setTailAttachers((prev) => {
 			return {
 				...prev,
-				queue: prev.queue.filter((a, index) => index !== 0),
+				queue: [...prev.queue.filter((a, index) => index !== 0)],
 			};
 		});
 
@@ -141,6 +163,16 @@ export default function Hell(params) {
 				};
 			});
 		} else {
+			const date = `${new Date().toLocaleString(undefined, {
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+			})}`;
+			handleNewMessage({
+				type: "Bad",
+				text: "Tail Attacher Queue Overload",
+				time: date,
+			});
 		}
 	};
 
