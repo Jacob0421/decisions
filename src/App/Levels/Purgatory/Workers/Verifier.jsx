@@ -30,6 +30,7 @@ export default function Verifier(params) {
 
 			return () => clearInterval(ticker);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [souls]);
 
 	return (
