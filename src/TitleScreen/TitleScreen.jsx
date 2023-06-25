@@ -5,7 +5,9 @@ import App from "../App/App";
 export default function TitleScreen() {
 	const [isMenuVisible, setIsMenuVisible] = useState(true);
 	const [isGameVisible, setIsGameVisible] = useState(false);
+	// eslint-disable-next-line
 	const [isOptionsVisible, setIsOptionsVisible] = useState(false);
+	// eslint-disable-next-line
 	const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
 	const handleMenuItemClick = (selected) => {

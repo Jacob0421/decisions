@@ -1,7 +1,7 @@
 .level-container {
     display: flex;
     flex-direction: column;
-    width: 75vw;
+    width: 70vw;
 }
 
 .level-container > div {
@@ -28,7 +28,7 @@
     position: absolute;
     right: 0;
     top:0;
-    width: 25vw;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     z-index: 1;
