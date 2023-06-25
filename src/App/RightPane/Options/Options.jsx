@@ -8,7 +8,7 @@ export default function Options(params) {
 		if (
 			window.confirm(
 				"This will reset all progress. Do you want to continue?"
-			) == true
+			) === true
 		) {
 			handleMenuItemClick("Title");
 		}
