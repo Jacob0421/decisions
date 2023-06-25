@@ -1,0 +1,21 @@
+.menuContainer{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4vh;
+    font-family: 'Press start 2P';
+}
+
+.menuButton {
+    all: unset;
+    border: 1px black solid;
+    padding: 2vh 3vw;
+    border-radius: 20px;
+    background-color: lightgrey;
+}
+
+    .menuButton:hover{
+    background-color: grey;
+    }
