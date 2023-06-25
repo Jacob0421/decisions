@@ -7,11 +7,11 @@ export default function Message(params) {
 		return (
 			<p
 				style={{
-					margin: "3px",
+					margin: "0px",
 					textAlign: "left",
 					width: "100%",
 					backgroundColor: "rgba(255, 0, 0, 0.4)",
-					padding: "0 1vw",
+					padding: ".2vh 1vw",
 				}}>
 				{message.time + ": " + message.text}
 			</p>
@@ -20,11 +20,11 @@ export default function Message(params) {
 		return (
 			<p
 				style={{
-					margin: "4px",
+					margin: "0px",
 					textAlign: "left",
 					width: "100%",
 					backgroundColor: "rgba(60, 179, 113, 0.5)",
-					padding: "0 1vw",
+					padding: ".2vh 1vw",
 				}}>
 				{message.time + ": " + message.text}
 			</p>

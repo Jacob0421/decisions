@@ -6,7 +6,9 @@ import RightPane from "./RightPane/RightPane";
 // import Explosion from "./Explosion";
 import "./App.css";
 
-export default function Content() {
+export default function Content(params) {
+	const { handleMenuItemClick } = params;
+
 	const [timeTaken, setTimeTaken] = useState(Date.now());
 	const [isEnd, setIsEnd] = useState(false);
 
@@ -182,6 +184,7 @@ export default function Content() {
 				money={money}
 				messages={messages}
 				handleBuy={handleBuy}
+				handleMenuItemClick={handleMenuItemClick}
 			/>
 			<div className="level-container">
 				<div className="heaven">

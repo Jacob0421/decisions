@@ -28,6 +28,12 @@ export default function TitleScreen() {
 				setIsOptionsVisible(false);
 				setIsTutorialVisible(true);
 				break;
+			case "Title":
+				setIsMenuVisible(true);
+				setIsGameVisible(false);
+				setIsOptionsVisible(false);
+				setIsTutorialVisible(false);
+				break;
 			default:
 				break;
 		}
@@ -38,7 +44,7 @@ export default function TitleScreen() {
 			{isMenuVisible && (
 				<Menu handleMenuItemClick={handleMenuItemClick} />
 			)}
-			{isGameVisible && <App />}
+			{isGameVisible && <App handleMenuItemClick={handleMenuItemClick} />}
 			{/* {isOptionsVisible && <Options />}
 			{isTutorialVisible && <Tutorial />} */}
 		</>
