@@ -263,14 +263,14 @@ export const Levels = [
 		Buildings: [
 			{
 				BuildingName: "Horn Fitter",
-				img: "/HornFitter",
+				img: "/img/ShopBackgrounds/HornFitter.png",
 				Upgrades: [
 					{
 						name: "Additional Horn Fitters",
 						effect: "+1 Horn Fitters",
 						cost: 100,
-						levelAffected: "Purgatory",
-						buildingAffected: "Hell",
+						levelAffected: "Hell",
+						buildingAffected: "HornFitter",
 						upgradeType: "Worker",
 						upgradeModifier: 1,
 					},
@@ -305,7 +305,7 @@ export const Levels = [
 			},
 			{
 				BuildingName: "Tail Attacher",
-				img: "/TailAttacher",
+				img: "/img/ShopBackgrounds/TailAttacher.png",
 				Upgrades: [
 					{
 						name: "Additional Tail Attachers",
@@ -347,7 +347,7 @@ export const Levels = [
 			},
 			{
 				BuildingName: "Trident Distributor",
-				img: "/TridentDistributor",
+				img: "/img/ShopBackgrounds/TridentDistributor.png",
 				Upgrades: [
 					{
 						name: "Additional Trident Distributors",
@@ -389,41 +389,41 @@ export const Levels = [
 			},
 			{
 				BuildingName: "The Devil",
-				img: "/TheDevil",
+				img: "/img/ShopBackgrounds/TheDevil.png",
 				Upgrades: [
 					{
-						name: "Additional Deciders",
-						effect: "+1 Deciders",
+						name: "Yep... nope lets not do this one...",
+						effect: "This does NOT add another one",
 						cost: 100,
-						levelAffected: "Purgatory",
-						buildingAffected: "Decider",
+						levelAffected: "Hell",
+						buildingAffected: "TheDevil",
 						upgradeType: "Worker",
 						upgradeModifier: 1,
 					},
 					{
-						name: "Mo' Money, Mo' Problems",
+						name: "They say the money is the root of all evil..",
 						effect: "Deciders generate more money when harvesting souls",
 						cost: 200,
-						levelAffected: "Purgatory",
-						buildingAffected: "Decider",
+						levelAffected: "Hell",
+						buildingAffected: "TheDevil",
 						upgradeType: "Money",
 						upgradeModifier: 1.5,
 					},
 					{
-						name: "New Decider Training",
-						effect: "Deciders generate 25% faster",
+						name: "So how do you want to start this conversation...?",
+						effect: "Devil processes 25% faster",
 						cost: 300,
-						levelAffected: "Purgatory",
-						buildingAffected: "Decider",
+						levelAffected: "Hell",
+						buildingAffected: "TheDevil",
 						upgradeType: "Productivity",
 						upgradeModifier: 1.25,
 					},
 					{
-						name: "WE NEED MORE ROPE!",
-						effect: "Deciders queue +5",
+						name: "Yeah... better just accomodate how slow he is",
+						effect: "Devil Queue +5",
 						cost: 400,
-						levelAffected: "Purgatory",
-						buildingAffected: "Decider",
+						levelAffected: "Hell",
+						buildingAffected: "TheDevil",
 						upgradeType: "Queue",
 						upgradeModifier: 5,
 					},
