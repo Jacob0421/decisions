@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
 	HornFitterInitial,
@@ -19,11 +19,84 @@ export default function Hell(params) {
 		soulsDescending,
 		handleProcessedSoulFromQueue,
 		handleFinalProcess,
-		// itemBought,
+		itemBought,
+		handleBuyCompleted,
 		soulsDescendingQueueMax,
 		handleRevenue,
 		handleNewMessage,
 	} = params;
+
+	useEffect(() => {
+		if (Object.keys(itemBought).length === 0) {
+			return;
+		}
+		applyItemBought();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [itemBought]);
+
+	const applyItemBought = () => {
+		switch (itemBought.buildingAffected) {
+			case "HornFitter":
+				setHornFitters((prev) => {
+					return {
+						...prev,
+						workers:
+							prev.workers + itemBought.upgradeModifiers.worker,
+						timeToComplete: Math.ceil(
+							prev.timeToComplete *
+								itemBought.upgradeModifiers.productivity
+						),
+						revenueGenerated: Math.ceil(
+							prev.revenueGenerated *
+								itemBought.upgradeModifiers.money
+						),
+					};
+				});
+				break;
+			case "TailAttacher":
+				setTailAttachers((prev) => {
+					return {
+						...prev,
+						workers: (prev.workers +=
+							itemBought.upgradeModifiers.worker),
+						timeToComplete: Math.ceil(
+							(prev.timeToComplete *=
+								itemBought.upgradeModifiers.productivity)
+						),
+						revenueGenerated: Math.ceil(
+							(prev.revenueGenerated *=
+								itemBought.upgradeModifiers.money)
+						),
+						queueMax: (prev.queueMax +=
+							itemBought.upgradeModifiers.queue),
+					};
+				});
+				break;
+			case "TridentDistributor":
+				setTridentDistributors((prev) => {
+					return {
+						...prev,
+						workers: (prev.workers +=
+							itemBought.upgradeModifiers.worker),
+						timeToComplete: Math.ceil(
+							(prev.timeToComplete *=
+								itemBought.upgradeModifiers.productivity)
+						),
+						revenueGenerated: Math.ceil(
+							(prev.revenueGenerated *=
+								itemBought.upgradeModifiers.money)
+						),
+						queueMax: (prev.queueMax +=
+							itemBought.upgradeModifiers.queue),
+					};
+				});
+				break;
+			default:
+				break;
+		}
+
+		handleBuyCompleted("Hell");
+	};
 
 	// eslint-disable-next-line
 	const [hornFitters, setHornFitters] = useState({

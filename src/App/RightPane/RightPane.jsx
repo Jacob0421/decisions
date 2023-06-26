@@ -68,6 +68,15 @@ export default function RightPane(params) {
 							onClick={() => handleMenuClick("Stats")}>
 							<LuMessagesSquare />
 						</div>
+						<div
+							className={
+								isOptionsVisible
+									? "menu-tab selected"
+									: "menu-tab"
+							}
+							onClick={() => handleMenuClick("Options")}>
+							<LuSettings />
+						</div>
 					</div>
 					<div className="current-stats">
 						<p style={{ alignItems: "center", fontSize: "20px" }}>
@@ -87,13 +96,6 @@ export default function RightPane(params) {
 							}}>
 							<GiReceiveMoney />: {money}
 						</p>
-					</div>
-					<div
-						className={
-							isOptionsVisible ? "menu-tab selected" : "menu-tab"
-						}
-						onClick={() => handleMenuClick("Options")}>
-						<LuSettings />
 					</div>
 				</div>
 				<div className="right-content">

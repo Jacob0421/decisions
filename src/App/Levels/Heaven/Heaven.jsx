@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
 	WelcomerInitial,
@@ -21,8 +21,82 @@ export default function Heaven(params) {
 		handleProcessedSoulFromQueue,
 		handleFinalProcess,
 		handleRevenue,
+		itemBought,
+		handleBuyCompleted,
 		handleNewMessage,
 	} = params;
+
+	useEffect(() => {
+		if (Object.keys(itemBought).length === 0) {
+			return;
+		}
+		applyItemBought();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [itemBought]);
+
+	const applyItemBought = () => {
+		switch (itemBought.buildingAffected) {
+			case "Welcomer":
+				setWelcomers((prev) => {
+					return {
+						...prev,
+						workers:
+							prev.workers + itemBought.upgradeModifiers.worker,
+						timeToComplete: Math.ceil(
+							prev.timeToComplete *
+								itemBought.upgradeModifiers.productivity
+						),
+						revenueGenerated: Math.ceil(
+							prev.revenueGenerated *
+								itemBought.upgradeModifiers.money
+						),
+					};
+				});
+				break;
+			case "WingReceptionist":
+				setWingReceptionists((prev) => {
+					return {
+						...prev,
+						workers: (prev.workers +=
+							itemBought.upgradeModifiers.worker),
+						timeToComplete: Math.ceil(
+							(prev.timeToComplete *=
+								itemBought.upgradeModifiers.productivity)
+						),
+						revenueGenerated: Math.ceil(
+							(prev.revenueGenerated *=
+								itemBought.upgradeModifiers.money)
+						),
+						queueMax: (prev.queueMax +=
+							itemBought.upgradeModifiers.queue),
+					};
+				});
+				break;
+			case "HaloDistributor":
+				setHaloDistributors((prev) => {
+					return {
+						...prev,
+						workers: (prev.workers +=
+							itemBought.upgradeModifiers.worker),
+						timeToComplete: Math.ceil(
+							(prev.timeToComplete *=
+								itemBought.upgradeModifiers.productivity)
+						),
+						revenueGenerated: Math.ceil(
+							(prev.revenueGenerated *=
+								itemBought.upgradeModifiers.money)
+						),
+						queueMax: (prev.queueMax +=
+							itemBought.upgradeModifiers.queue),
+					};
+				});
+				break;
+			default:
+				break;
+		}
+
+		handleBuyCompleted("Heaven");
+	};
 
 	// eslint-disable-next-line
 	const [welcomers, setWelcomers] = useState({

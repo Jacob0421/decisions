@@ -26,6 +26,7 @@ export default function Content(params) {
 
 	const [hellItemBought, setHellItemBought] = useState({});
 	const [purgatoryItemBought, setPurgatoryItemBought] = useState({});
+	const [heavenItemBought, setHeavenItemBought] = useState({});
 
 	const [money, setMoney] = useState(1000);
 
@@ -160,6 +161,9 @@ export default function Content(params) {
 			case "Purgatory":
 				setPurgatoryItemBought(upgradeObject);
 				break;
+			case "Heaven":
+				setHeavenItemBought(upgradeObject);
+				break;
 			default:
 				break;
 		}
@@ -169,6 +173,12 @@ export default function Content(params) {
 		switch (levelName) {
 			case "Purgatory":
 				setPurgatoryItemBought({});
+				break;
+			case "Hell":
+				setHellItemBought({});
+				break;
+			case "Heaven":
+				setHeavenItemBought({});
 				break;
 			default:
 				break;
@@ -194,9 +204,11 @@ export default function Content(params) {
 						handleProcessedSoulFromQueue={
 							handleProcessedSoulFromQueue
 						}
+						itemBought={heavenItemBought}
 						handleFinalProcess={handleFinalProcess}
 						handleRevenue={handleRevenue}
 						handleNewMessage={handleNewMessage}
+						handleBuyCompleted={handleBuyCompleted}
 					/>
 				</div>
 
@@ -221,6 +233,7 @@ export default function Content(params) {
 						soulsDescendingQueueMax={soulsDescending.queueMax}
 						handleRevenue={handleRevenue}
 						handleNewMessage={handleNewMessage}
+						handleBuyCompleted={handleBuyCompleted}
 					/>
 				</div>
 			</div>
