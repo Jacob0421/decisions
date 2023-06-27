@@ -1,3 +1,7 @@
+body{
+    background: white;
+}
+
 .level-container {
     display: flex;
     flex-direction: column;
@@ -32,7 +36,6 @@
     display: flex;
     flex-direction: column;
     z-index: 1;
-    background: white;
 }
 
 .right-content {
