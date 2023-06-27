@@ -91,6 +91,25 @@ export default function Heaven(params) {
 					};
 				});
 				break;
+			case "God":
+				setGod((prev) => {
+					return {
+						...prev,
+						workers: (prev.workers +=
+							itemBought.upgradeModifiers.worker),
+						timeToComplete: Math.ceil(
+							(prev.timeToComplete *=
+								itemBought.upgradeModifiers.productivity)
+						),
+						revenueGenerated: Math.ceil(
+							(prev.revenueGenerated *=
+								itemBought.upgradeModifiers.money)
+						),
+						queueMax: (prev.queueMax +=
+							itemBought.upgradeModifiers.queue),
+					};
+				});
+				break;
 			default:
 				break;
 		}
